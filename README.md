@@ -44,13 +44,14 @@ This launcher and `yue2_groove` UI code are Apache-2.0. By installing you agree 
 | FFmpeg | Ensures `ffmpeg` 6.1+ on `PATH` (`conda-forge` if missing) |
 | SheetSage2 venv | `app/.venv-sheetsage2` (Python 3.11 preferred, 3.10 fallback) + torch 2.8 + `models/SheetSage2` |
 | `.env` | Absolute `YUE2_GROOVE_SHEETSAGE_PYTHON` / `…_MODEL` (+ view/host); upserts without clobbering other keys |
-| YuE2 weights | `hf download m-a-p/YuE2-3B` and `YuE2-Vae` into Pinokio `cache` (`HF_XET_HIGH_PERFORMANCE=1`) |
-| Verify | Imports + executable SheetSage python + `models/SheetSage2` present |
+| YuE2 weights | `hf download m-a-p/YuE2-3B` and `YuE2-Vae` into Pinokio `cache` (`HF_XET_HIGH_PERFORMANCE=1`, `HF_HUB_ENABLE_HF_TRANSFER=0`) |
+| Verify | Imports + executable SheetSage python + real model files under `models/SheetSage2` + YuE2 HF cache dirs |
 
 **MERT-v2-FullSong** (SheetSage2’s parent encoder) is **not** pre-downloaded at install — the first Cover transcription may pull it from Hugging Face.
 
 ## Notes
 
+- If Install fails on `hf_transfer`, we force `HF_HUB_ENABLE_HF_TRANSFER=0` on every `hf download` step so the XET path works without the `hf_transfer` package.
 - Start uses `python -m yue2_groove … --sheetsage-python …` so Pinokio owns the process and Cover is configured.
 - macOS installs groove torch via `overrides/macos.txt` (2.14); SheetSage2 uses torch 2.8.0 without the CUDA index.
 - Linux SheetSage2 uses torch/torchaudio 2.8.0 from the cu126 wheel index.

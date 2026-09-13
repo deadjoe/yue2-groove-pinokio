@@ -61,6 +61,8 @@ module.exports = {
 
     // SheetSage2 separate venv at app/.venv-sheetsage2 (AUTO-DETECT looks here).
     // Recipe from app docs/COVER_EDIT.md — Python 3.11 preferred, 3.10 fallback.
+    // Force HF_HUB_ENABLE_HF_TRANSFER=0: Pinokio injects =1 but hf_transfer is not installed;
+    // XET high-performance path works without the hf_transfer package.
     {
       when: "{{platform === 'linux'}}",
       method: "shell.run",
@@ -68,12 +70,14 @@ module.exports = {
         path: "app",
         bluefairy: "off",
         env: {
+          HF_HUB_ENABLE_HF_TRANSFER: "0",
           HF_XET_HIGH_PERFORMANCE: "1"
         },
         message: [
           "if command -v python3.11 >/dev/null; then PY=python3.11; elif command -v python3.10 >/dev/null; then PY=python3.10; else PY=python3; fi; echo \"SheetSage2 venv python: $($PY --version)\"; $PY -m venv .venv-sheetsage2",
           ".venv-sheetsage2/bin/python -m pip install -U pip",
           ".venv-sheetsage2/bin/python -m pip install huggingface-hub==0.36.0",
+          "rm -rf models/SheetSage2",
           ".venv-sheetsage2/bin/hf download m-a-p/SheetSage2 --local-dir models/SheetSage2",
           ".venv-sheetsage2/bin/python -m pip install torch==2.8.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu126",
           ".venv-sheetsage2/bin/python -m pip install -r models/SheetSage2/requirements.txt"
@@ -87,12 +91,14 @@ module.exports = {
         path: "app",
         bluefairy: "off",
         env: {
+          HF_HUB_ENABLE_HF_TRANSFER: "0",
           HF_XET_HIGH_PERFORMANCE: "1"
         },
         message: [
           "if command -v python3.11 >/dev/null; then PY=python3.11; elif command -v python3.10 >/dev/null; then PY=python3.10; else PY=python3; fi; echo \"SheetSage2 venv python: $($PY --version)\"; $PY -m venv .venv-sheetsage2",
           ".venv-sheetsage2/bin/python -m pip install -U pip",
           ".venv-sheetsage2/bin/python -m pip install huggingface-hub==0.36.0",
+          "rm -rf models/SheetSage2",
           ".venv-sheetsage2/bin/hf download m-a-p/SheetSage2 --local-dir models/SheetSage2",
           ".venv-sheetsage2/bin/python -m pip install torch==2.8.0 torchaudio==2.8.0",
           ".venv-sheetsage2/bin/python -m pip install -r models/SheetSage2/requirements.txt"
@@ -110,6 +116,7 @@ module.exports = {
     },
 
     // Pre-download YuE2 weights into Pinokio's HF cache (~8 GB)
+    // Same transfer override: Pinokio may inject HF_HUB_ENABLE_HF_TRANSFER=1.
     {
       method: "shell.run",
       params: {
@@ -118,6 +125,7 @@ module.exports = {
         cache: "cache",
         bluefairy: "off",
         env: {
+          HF_HUB_ENABLE_HF_TRANSFER: "0",
           HF_XET_HIGH_PERFORMANCE: "1"
         },
         message: [
@@ -141,7 +149,17 @@ module.exports = {
       method: "shell.run",
       params: {
         path: "app",
-        message: "test -x .venv-sheetsage2/bin/python && .venv-sheetsage2/bin/python -c \"import torch, transformers\" && test -d models/SheetSage2 && (test -f models/SheetSage2/requirements.txt || test -f models/SheetSage2/config.json || ls models/SheetSage2 | grep -q .)"
+        message: "test -x .venv-sheetsage2/bin/python && .venv-sheetsage2/bin/python -c \"import torch, transformers\" && (test -f models/SheetSage2/config.json || test -f models/SheetSage2/model.safetensors || test -f models/SheetSage2/pytorch_model.bin) && find models/SheetSage2 -type f -size +100k | head -1 | grep -q ."
+      }
+    },
+    // YuE2: hf download exit codes are the primary gate; also require HF cache content
+    {
+      method: "shell.run",
+      params: {
+        venv: "env",
+        path: "app",
+        cache: "cache",
+        message: "test -n \"${HF_HOME:-}\" && test -d \"$HF_HOME\" && find \"$HF_HOME\" -type d \\( -iname '*YuE2*' -o -iname '*yue2*' \\) 2>/dev/null | head -1 | grep -q ."
       }
     },
 
