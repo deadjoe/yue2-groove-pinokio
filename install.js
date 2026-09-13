@@ -30,7 +30,7 @@ module.exports = {
         bluefairy: "off",
         message: [
           "python -m pip install -U pip uv",
-          "uv pip install -e \".[yue2]\" --overrides overrides/macos.txt"
+          "uv pip install --python \"$VIRTUAL_ENV/bin/python\" -e \".[yue2]\" --overrides overrides/macos.txt"
         ]
       }
     },
@@ -43,7 +43,7 @@ module.exports = {
         bluefairy: "off",
         message: [
           "python -m pip install -U pip uv",
-          "uv pip install -e \".[yue2]\" --overrides overrides/linux.txt"
+          "uv pip install --python \"$VIRTUAL_ENV/bin/python\" -e \".[yue2]\" --overrides overrides/linux.txt"
         ]
       }
     },
@@ -71,7 +71,7 @@ module.exports = {
           HF_HUB_ENABLE_HF_TRANSFER: "1"
         },
         message: [
-          "uv pip install -U huggingface-hub hf_transfer",
+          "uv pip install --python \"$VIRTUAL_ENV/bin/python\" -U huggingface-hub hf_transfer",
           "hf download m-a-p/YuE2-3B",
           "hf download m-a-p/YuE2-Vae"
         ]

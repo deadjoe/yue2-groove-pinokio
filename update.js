@@ -14,7 +14,7 @@ module.exports = {
         venv: "env",
         path: "app",
         bluefairy: "off",
-        message: "uv pip install -e \".[yue2]\" --overrides overrides/macos.txt"
+        message: "uv pip install --python \"$VIRTUAL_ENV/bin/python\" -e \".[yue2]\" --overrides overrides/macos.txt"
       }
     },
     {
@@ -24,7 +24,7 @@ module.exports = {
         venv: "env",
         path: "app",
         bluefairy: "off",
-        message: "uv pip install -e \".[yue2]\" --overrides overrides/linux.txt"
+        message: "uv pip install --python \"$VIRTUAL_ENV/bin/python\" -e \".[yue2]\" --overrides overrides/linux.txt"
       }
     },
     {
