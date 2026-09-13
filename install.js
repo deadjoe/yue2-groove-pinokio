@@ -147,7 +147,7 @@ module.exports = {
           HF_XET_HIGH_PERFORMANCE: "1"
         },
         message: [
-          "uv pip install --python \"$VIRTUAL_ENV/bin/python\" -U huggingface-hub",
+          "uv pip install --python \"$VIRTUAL_ENV/bin/python\" \"huggingface-hub==0.36.2\"",
           "export HF_HUB_ENABLE_HF_TRANSFER=0 HF_XET_HIGH_PERFORMANCE=1; hf download m-a-p/YuE2-3B",
           "export HF_HUB_ENABLE_HF_TRANSFER=0 HF_XET_HIGH_PERFORMANCE=1; hf download m-a-p/YuE2-Vae"
         ]
