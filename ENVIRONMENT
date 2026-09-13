@@ -4,6 +4,9 @@
 YUE2_GROOVE_VIEW=song
 YUE2_GROOVE_HOST=127.0.0.1
 
+# SheetSage2 paths (YUE2_GROOVE_SHEETSAGE_PYTHON / YUE2_GROOVE_SHEETSAGE_MODEL)
+# are written to app/.env by Install with absolute paths — do not hardcode them here.
+
 # Apple Silicon memory guard (safe defaults; ignored on CUDA/CPU)
 PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.8
 PYTORCH_MPS_LOW_WATERMARK_RATIO=0.5

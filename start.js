@@ -11,7 +11,8 @@ module.exports = {
           YUE2_GROOVE_HOST: "127.0.0.1"
         },
         // Prefer -m over scripts/serve.sh so Pinokio owns the daemon lifecycle.
-        message: "python -m yue2_groove --host 127.0.0.1 --port {{port}} --no-preload",
+        // --sheetsage-python wires Cover; app/.env (written by Install) also sets YUE2_GROOVE_*.
+        message: "python -m yue2_groove --host 127.0.0.1 --port {{port}} --no-preload --sheetsage-python \"$PWD/.venv-sheetsage2/bin/python\"",
         on: [
           {
             // Pinokio 8 / Factory: full match is input.event[0] (no capture-group index).

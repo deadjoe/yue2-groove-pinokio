@@ -1,6 +1,6 @@
 {
   "title": "YUE2 // GROOVE",
-  "description": "Unofficial Gradio UI for YuE2 song generation. Default SONG view for music makers. Model weights are CC BY-NC 4.0 (non-commercial). macOS Apple Silicon ≥32GB or Linux NVIDIA ≥24GB; Windows not supported in v1.",
+  "description": "Unofficial Gradio UI for YuE2: song generation and SheetSage2 Cover (dual venv + ffmpeg). Default SONG view. Model weights are CC BY-NC 4.0 (non-commercial). macOS Apple Silicon ≥32GB or Linux NVIDIA ≥24GB; Windows not supported. Larger disk (YuE2 + SheetSage2; MERT may download on first Cover).",
   "icon": "icon.png",
   "links": [
     {
@@ -10,6 +10,10 @@
     {
       "title": "YuE2 (upstream)",
       "url": "https://github.com/multimodal-art-projection/YuE"
+    },
+    {
+      "title": "SheetSage2",
+      "url": "https://huggingface.co/m-a-p/SheetSage2"
     }
   ]
 }

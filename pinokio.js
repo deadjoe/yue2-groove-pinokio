@@ -3,11 +3,11 @@ const path = require("path")
 module.exports = {
   version: "1.0",
   title: "YUE2 // GROOVE",
-  description: "Unofficial Gradio UI for YuE2. SONG view by default. Weights CC BY-NC 4.0. macOS ≥32GB or Linux NVIDIA ≥24GB; Windows not supported in v1.",
+  description: "Unofficial Gradio UI for YuE2 — song generation AND SheetSage2 Cover. Dual venv. Weights CC BY-NC 4.0. macOS ≥32GB or Linux NVIDIA ≥24GB; Windows not supported.",
   icon: "icon.png",
   menu: async (kernel, info) => {
-    // Real install = cloned app source + venv (venv alone can exist if clone was skipped)
-    let installed = info.exists("app/pyproject.toml") && (info.exists("app/env") || info.exists("env"))
+    // Full install = cloned app + groove venv + SheetSage2 venv
+    let installed = info.exists("app/pyproject.toml") && info.exists("app/env") && info.exists("app/.venv-sheetsage2")
     let running = {
       install: info.running("install.js"),
       start: info.running("start.js"),
