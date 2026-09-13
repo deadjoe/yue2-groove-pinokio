@@ -1,0 +1,88 @@
+module.exports = {
+  run: [
+    // Windows is out of scope for v1
+    {
+      when: "{{platform === 'win32'}}",
+      method: "notify",
+      params: {
+        html: "<b>Windows is not supported yet.</b><br/>YUE2 // GROOVE v1 targets macOS Apple Silicon (≥32 GB) or Linux + NVIDIA (≥24 GB VRAM)."
+      },
+      next: null
+    },
+
+    // Clone the app once
+    {
+      when: "{{!kernel.exists('app')}}",
+      method: "shell.run",
+      params: {
+        message: "git clone --depth 1 https://github.com/deadjoe/yue2_groove.git app"
+      }
+    },
+
+    // Create / activate venv and install groove + YuE2 with platform overrides.
+    // Do NOT use a generic Factory torch.js matrix — macOS needs torch 2.14 via overrides/macos.txt.
+    {
+      when: "{{platform === 'darwin'}}",
+      method: "shell.run",
+      params: {
+        venv: "env",
+        path: "app",
+        bluefairy: "off",
+        message: [
+          "python -m pip install -U pip uv",
+          "uv pip install -e \".[yue2]\" --overrides overrides/macos.txt"
+        ]
+      }
+    },
+    {
+      when: "{{platform === 'linux'}}",
+      method: "shell.run",
+      params: {
+        venv: "env",
+        path: "app",
+        bluefairy: "off",
+        message: [
+          "python -m pip install -U pip uv",
+          "uv pip install -e \".[yue2]\" --overrides overrides/linux.txt"
+        ]
+      }
+    },
+
+    // Apple Silicon attention-kernel guard (loads no weights)
+    {
+      when: "{{platform === 'darwin'}}",
+      method: "shell.run",
+      params: {
+        venv: "env",
+        path: "app",
+        message: "python scripts/mps_sdpa_check.py"
+      }
+    },
+
+    // Pre-download YuE2 weights into Pinokio's HF cache (~8 GB)
+    {
+      method: "shell.run",
+      params: {
+        venv: "env",
+        path: "app",
+        cache: "cache",
+        bluefairy: "off",
+        env: {
+          HF_HUB_ENABLE_HF_TRANSFER: "1"
+        },
+        message: [
+          "uv pip install -U huggingface-hub hf_transfer",
+          "hf download m-a-p/YuE2-3B",
+          "hf download m-a-p/YuE2-Vae"
+        ]
+      }
+    },
+
+    {
+      method: "notify",
+      params: {
+        html: "<b>Install finished.</b><br/>YuE2 weights are <b>CC BY-NC 4.0</b> (non-commercial).<br/>Click <b>Start</b> — the UI opens in the SONG view. Cover-from-audio is not part of this v1 launcher."
+      }
+    }
+  ]
+}

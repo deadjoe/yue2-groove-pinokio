@@ -1,0 +1,15 @@
+{
+  "title": "YUE2 // GROOVE",
+  "description": "Unofficial Gradio UI for YuE2 song generation. Default SONG view for music makers. Model weights are CC BY-NC 4.0 (non-commercial). macOS Apple Silicon ≥32GB or Linux NVIDIA ≥24GB; Windows not supported in v1.",
+  "icon": "icon.png",
+  "links": [
+    {
+      "title": "Groove (app)",
+      "url": "https://github.com/deadjoe/yue2_groove"
+    },
+    {
+      "title": "YuE2 (upstream)",
+      "url": "https://github.com/multimodal-art-projection/YuE"
+    }
+  ]
+}

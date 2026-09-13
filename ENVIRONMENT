@@ -1,0 +1,9 @@
+# Injected into Install / Start shells by Pinokio.
+# Do not put secrets here; use ENVIRONMENT.local for passwords if you add auth later.
+
+YUE2_GROOVE_VIEW=song
+YUE2_GROOVE_HOST=127.0.0.1
+
+# Apple Silicon memory guard (safe defaults; ignored on CUDA/CPU)
+PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.8
+PYTORCH_MPS_LOW_WATERMARK_RATIO=0.5

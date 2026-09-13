@@ -1,0 +1,5 @@
+ENVIRONMENT.local
+app/
+env/
+cache/
+.DS_Store
