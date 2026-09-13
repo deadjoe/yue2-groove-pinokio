@@ -40,17 +40,18 @@ This launcher and `yue2_groove` UI code are Apache-2.0. By installing you agree 
 | Step | Detail |
 |---|---|
 | Clone | `yue2_groove` → `app/` (recovers if Pinokio created an empty `app/env` first) |
-| Groove venv | `app/env` — `uv pip install -e ".[yue2]"` with `overrides/{macos,linux}.txt` |
+| Groove venv | `app/env` — `uv pip install -e ".[yue2]"` with `overrides/{macos,linux}.txt`, then reinstall/verify Gradio frontend assets |
 | FFmpeg | Ensures `ffmpeg` 6.1+ on `PATH` (`conda-forge` if missing) |
 | SheetSage2 venv | `app/.venv-sheetsage2` (Python 3.11 preferred, 3.10 fallback) + torch 2.8 + `models/SheetSage2` |
 | `.env` | Absolute `YUE2_GROOVE_SHEETSAGE_PYTHON` / `…_MODEL` (+ view/host); upserts without clobbering other keys |
 | YuE2 weights | `hf download m-a-p/YuE2-3B` and `YuE2-Vae` into Pinokio `cache` (`HF_XET_HIGH_PERFORMANCE=1`, `HF_HUB_ENABLE_HF_TRANSFER=0`) |
-| Verify | Imports + executable SheetSage python + real model files under `models/SheetSage2` + YuE2 HF cache dirs |
+| Verify | Imports + Gradio `templates/frontend/index.html` + executable SheetSage python + real model files under `models/SheetSage2` + YuE2 HF cache dirs |
 
 **MERT-v2-FullSong** (SheetSage2’s parent encoder) is **not** pre-downloaded at install — the first Cover transcription may pull it from Hugging Face.
 
 ## Notes
 
+- If the UI shows a Gradio frontend build error (`Did you install Gradio from source…` / `TemplateNotFound: frontend/index.html`), click **Install** again. Disable **Pinokio Disk Saver** for this app if it strips package files under `site-packages/gradio/templates`.
 - If Install fails on `hf_transfer`, we force `HF_HUB_ENABLE_HF_TRANSFER=0` on every `hf download` step so the XET path works without the `hf_transfer` package.
 - Start uses `python -m yue2_groove … --sheetsage-python …` so Pinokio owns the process and Cover is configured.
 - macOS installs groove torch via `overrides/macos.txt` (2.14); SheetSage2 uses torch 2.8.0 without the CUDA index.

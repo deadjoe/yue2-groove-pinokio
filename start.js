@@ -12,7 +12,8 @@ module.exports = {
         },
         // Prefer -m over scripts/serve.sh so Pinokio owns the daemon lifecycle.
         // --sheetsage-python wires Cover; app/.env (written by Install) also sets YUE2_GROOVE_*.
-        message: "python -m yue2_groove --host 127.0.0.1 --port {{port}} --no-preload --sheetsage-python \"$PWD/.venv-sheetsage2/bin/python\"",
+        // Fail loudly if Gradio frontend assets are missing (incomplete install / Disk Saver).
+        message: "python -c \"from pathlib import Path; import gradio; p=Path(gradio.__file__).parent/'templates'/'frontend'/'index.html'; assert p.is_file(), p\" && python -m yue2_groove --host 127.0.0.1 --port {{port}} --no-preload --sheetsage-python \"$PWD/.venv-sheetsage2/bin/python\"",
         on: [
           {
             // Factory-standard capturing group: match is input.event[1].

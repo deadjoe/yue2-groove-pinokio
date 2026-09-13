@@ -49,6 +49,21 @@ module.exports = {
       }
     },
 
+    // Gradio frontend assets: Pinokio Disk Saver / incomplete installs can strip
+    // site-packages/gradio/templates/frontend. Reinstall + assert before continuing.
+    {
+      method: "shell.run",
+      params: {
+        venv: "env",
+        path: "app",
+        bluefairy: "off",
+        message: [
+          "uv pip install --python \"$VIRTUAL_ENV/bin/python\" --reinstall-package gradio \"gradio>=6,<7\"",
+          "python -c \"from pathlib import Path; import gradio; p=Path(gradio.__file__).parent/'templates'/'frontend'/'index.html'; assert p.is_file(), p\""
+        ]
+      }
+    },
+
     // FFmpeg 6.1+ on PATH (SheetSage2 Cover needs it)
     {
       method: "shell.run",
@@ -143,7 +158,7 @@ module.exports = {
       params: {
         venv: "env",
         path: "app",
-        message: "python -c \"import yue2_groove, yue2, gradio\""
+        message: "python -c \"from pathlib import Path; import yue2_groove, yue2, gradio; p=Path(gradio.__file__).parent/'templates'/'frontend'/'index.html'; assert p.is_file(), p\""
       }
     },
     {
