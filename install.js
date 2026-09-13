@@ -51,6 +51,7 @@ module.exports = {
 
     // Gradio frontend assets: Pinokio Disk Saver / incomplete installs can strip
     // site-packages/gradio/templates/frontend. Reinstall + assert before continuing.
+    // Re-pin huggingface-hub==0.36.2 after Gradio (it may pull hub 1.x; YuE2 needs 0.36.x).
     {
       method: "shell.run",
       params: {
@@ -59,6 +60,7 @@ module.exports = {
         bluefairy: "off",
         message: [
           "uv pip install --python \"$VIRTUAL_ENV/bin/python\" --reinstall-package gradio \"gradio>=6,<7\"",
+          "uv pip install --python \"$VIRTUAL_ENV/bin/python\" \"huggingface-hub==0.36.2\"",
           "python -c \"from pathlib import Path; import gradio; p=Path(gradio.__file__).parent/'templates'/'frontend'/'index.html'; assert p.is_file(), p\""
         ]
       }
