@@ -6,8 +6,8 @@ module.exports = {
   description: "Unofficial Gradio UI for YuE2. SONG view by default. Weights CC BY-NC 4.0. macOS ≥32GB or Linux NVIDIA ≥24GB; Windows not supported in v1.",
   icon: "icon.png",
   menu: async (kernel, info) => {
-    // venv is created under path:"app" → app/env
-    let installed = info.exists("app/env") || info.exists("env")
+    // Real install = cloned app source + venv (venv alone can exist if clone was skipped)
+    let installed = info.exists("app/pyproject.toml") && (info.exists("app/env") || info.exists("env"))
     let running = {
       install: info.running("install.js"),
       start: info.running("start.js"),
@@ -44,12 +44,15 @@ module.exports = {
 
     if (running.start) {
       let local = info.local("start.js")
-      if (local && local.url) {
+      let url = local && local.url
+      // Ignore unresolved template garbage from a failed URL capture
+      let urlOk = url && typeof url === "string" && /^https?:\/\//.test(url) && !url.includes("{{")
+      if (urlOk) {
         return [{
           default: true,
           icon: "fa-solid fa-rocket",
           text: "Open Web UI",
-          href: local.url
+          href: url
         }, {
           icon: "fa-solid fa-terminal",
           text: "Terminal",
