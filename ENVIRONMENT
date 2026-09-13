@@ -10,3 +10,8 @@ YUE2_GROOVE_HOST=127.0.0.1
 # Apple Silicon memory guard (safe defaults; ignored on CUDA/CPU)
 PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.8
 PYTORCH_MPS_LOW_WATERMARK_RATIO=0.5
+
+# HF hub: Pinokio may inject HF_HUB_ENABLE_HF_TRANSFER=1 but hf_transfer is not
+# always installed. Keep transfer off; use XET high-performance instead.
+HF_HUB_ENABLE_HF_TRANSFER=0
+HF_XET_HIGH_PERFORMANCE=1

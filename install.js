@@ -93,7 +93,7 @@ module.exports = {
           ".venv-sheetsage2/bin/python -m pip install -U pip",
           ".venv-sheetsage2/bin/python -m pip install huggingface-hub==0.36.0",
           "rm -rf models/SheetSage2",
-          ".venv-sheetsage2/bin/hf download m-a-p/SheetSage2 --local-dir models/SheetSage2",
+          "export HF_HUB_ENABLE_HF_TRANSFER=0 HF_XET_HIGH_PERFORMANCE=1; .venv-sheetsage2/bin/hf download m-a-p/SheetSage2 --local-dir models/SheetSage2",
           ".venv-sheetsage2/bin/python -m pip install torch==2.8.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu126",
           ".venv-sheetsage2/bin/python -m pip install -r models/SheetSage2/requirements.txt"
         ]
@@ -114,7 +114,7 @@ module.exports = {
           ".venv-sheetsage2/bin/python -m pip install -U pip",
           ".venv-sheetsage2/bin/python -m pip install huggingface-hub==0.36.0",
           "rm -rf models/SheetSage2",
-          ".venv-sheetsage2/bin/hf download m-a-p/SheetSage2 --local-dir models/SheetSage2",
+          "export HF_HUB_ENABLE_HF_TRANSFER=0 HF_XET_HIGH_PERFORMANCE=1; .venv-sheetsage2/bin/hf download m-a-p/SheetSage2 --local-dir models/SheetSage2",
           ".venv-sheetsage2/bin/python -m pip install torch==2.8.0 torchaudio==2.8.0",
           ".venv-sheetsage2/bin/python -m pip install -r models/SheetSage2/requirements.txt"
         ]
@@ -146,8 +146,8 @@ module.exports = {
         },
         message: [
           "uv pip install --python \"$VIRTUAL_ENV/bin/python\" -U huggingface-hub",
-          "hf download m-a-p/YuE2-3B",
-          "hf download m-a-p/YuE2-Vae"
+          "export HF_HUB_ENABLE_HF_TRANSFER=0 HF_XET_HIGH_PERFORMANCE=1; hf download m-a-p/YuE2-3B",
+          "export HF_HUB_ENABLE_HF_TRANSFER=0 HF_XET_HIGH_PERFORMANCE=1; hf download m-a-p/YuE2-Vae"
         ]
       }
     },
