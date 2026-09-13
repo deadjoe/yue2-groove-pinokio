@@ -5,15 +5,15 @@
   "links": [
     {
       "title": "Groove (app)",
-      "url": "https://github.com/deadjoe/yue2_groove"
+      "value": "https://github.com/deadjoe/yue2_groove"
     },
     {
       "title": "YuE2 (upstream)",
-      "url": "https://github.com/multimodal-art-projection/YuE"
+      "value": "https://github.com/multimodal-art-projection/YuE"
     },
     {
       "title": "SheetSage2",
-      "url": "https://huggingface.co/m-a-p/SheetSage2"
+      "value": "https://huggingface.co/m-a-p/SheetSage2"
     }
   ]
 }

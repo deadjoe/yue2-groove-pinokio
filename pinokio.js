@@ -1,7 +1,7 @@
 const path = require("path")
 
 module.exports = {
-  version: "1.0",
+  version: "8.0",
   title: "YUE2 // GROOVE",
   description: "Unofficial Gradio UI for YuE2 — song generation AND SheetSage2 Cover. Dual venv. Weights CC BY-NC 4.0. macOS ≥32GB or Linux NVIDIA ≥24GB; Windows not supported.",
   icon: "icon.png",

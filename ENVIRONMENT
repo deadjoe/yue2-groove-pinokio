@@ -1,17 +1,13 @@
-# Injected into Install / Start shells by Pinokio.
-# Do not put secrets here; use ENVIRONMENT.local for passwords if you add auth later.
+# Imported into every script shell by Pinokio.
+# Do not put secrets here; use ENVIRONMENT.local if you add auth later.
 
 YUE2_GROOVE_VIEW=song
 YUE2_GROOVE_HOST=127.0.0.1
 
-# SheetSage2 paths (YUE2_GROOVE_SHEETSAGE_PYTHON / YUE2_GROOVE_SHEETSAGE_MODEL)
-# are written to app/.env by Install with absolute paths — do not hardcode them here.
-
-# Apple Silicon memory guard (safe defaults; ignored on CUDA/CPU)
+# Apple Silicon memory guard (ignored on CUDA/CPU)
 PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.8
 PYTORCH_MPS_LOW_WATERMARK_RATIO=0.5
 
-# HF hub: Pinokio may inject HF_HUB_ENABLE_HF_TRANSFER=1 but hf_transfer is not
-# always installed. Keep transfer off; use XET high-performance instead.
+# Pinokio may inject HF_HUB_ENABLE_HF_TRANSFER=1. Keep transfer off; XET is enough.
 HF_HUB_ENABLE_HF_TRANSFER=0
 HF_XET_HIGH_PERFORMANCE=1
