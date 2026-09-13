@@ -15,9 +15,9 @@ module.exports = {
         message: "python -m yue2_groove --host 127.0.0.1 --port {{port}} --no-preload --sheetsage-python \"$PWD/.venv-sheetsage2/bin/python\"",
         on: [
           {
-            // Pinokio 8 / Factory: full match is input.event[0] (no capture-group index).
+            // Factory-standard capturing group: match is input.event[1].
             // Gradio prints http://127.0.0.1:<port> or http://localhost:<port>.
-            event: "/http:\\/\\/(?:127\\.0\\.0\\.1|localhost):\\d+/",
+            event: "/(http:\\/\\/(?:127\\.0\\.0\\.1|localhost):\\d+)/",
             done: true
           }
         ]
@@ -26,10 +26,10 @@ module.exports = {
     {
       // Only set when the shell matched a URL; otherwise Pinokio can write the
       // unresolved template literal and Open Web UI becomes ENOENT garbage.
-      when: "{{Boolean(input && input.event)}}",
+      when: "{{Boolean(input && input.event && input.event[1])}}",
       method: "local.set",
       params: {
-        url: "{{input.event[0]}}"
+        url: "{{input.event[1]}}"
       }
     }
   ]

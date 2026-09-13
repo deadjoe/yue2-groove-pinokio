@@ -106,12 +106,13 @@ module.exports = {
       }
     },
 
-    // Write app/.env with absolute SheetSage paths (upsert; do not clobber unrelated keys)
+    // Write app/.env with absolute SheetSage paths (upsert; do not clobber unrelated keys).
+    // External script avoids jimini confusion from inline Python containing split('=', 1)[0].
     {
       method: "shell.run",
       params: {
         path: "app",
-        message: "python3 - <<'PY'\nfrom pathlib import Path\napp = Path('.').resolve()\nenv_path = app / '.env'\nkeys = {\n    'YUE2_GROOVE_SHEETSAGE_PYTHON': str(app / '.venv-sheetsage2' / 'bin' / 'python'),\n    'YUE2_GROOVE_SHEETSAGE_MODEL': str(app / 'models' / 'SheetSage2'),\n    'YUE2_GROOVE_VIEW': 'song',\n    'YUE2_GROOVE_HOST': '127.0.0.1',\n}\nlines = env_path.read_text(encoding='utf-8').splitlines() if env_path.is_file() else []\nseen = set()\nout = []\nfor line in lines:\n    raw = line.strip()\n    if not raw or raw.startswith('#') or '=' not in raw:\n        out.append(line)\n        continue\n    k = raw.split('=', 1)[0].strip()\n    if k in keys:\n        out.append(f'{k}={keys[k]}')\n        seen.add(k)\n    else:\n        out.append(line)\nfor k, v in keys.items():\n    if k not in seen:\n        out.append(f'{k}={v}')\nenv_path.write_text('\\n'.join(out) + '\\n', encoding='utf-8')\nprint('Wrote', env_path)\nfor k in keys:\n    print(f'  {k}={keys[k]}')\nPY"
+        message: "python3 ../scripts/write_app_env.py"
       }
     },
 
