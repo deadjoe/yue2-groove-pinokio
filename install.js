@@ -14,15 +14,6 @@ module.exports = {
         mode: "ai"
       }
     },
-    {
-      when: "{{platform === 'win32'}}",
-      method: "notify",
-      params: {
-        html: "<b>Windows is not supported yet.</b><br/>YUE2 // GROOVE targets macOS Apple Silicon (≥32 GB) or Linux + NVIDIA (≥24 GB VRAM)."
-      },
-      next: null
-    },
-
     // Recover an empty app/ (Pinokio may create app/env before clone).
     {
       when: "{{!exists('app/pyproject.toml')}}",
@@ -45,7 +36,7 @@ module.exports = {
       }
     },
     {
-      when: "{{platform === 'linux'}}",
+      when: "{{platform === 'linux' || platform === 'win32'}}",
       method: "shell.run",
       params: {
         venv: "env",
@@ -73,7 +64,7 @@ module.exports = {
 
     // Cover venv: official venv: attribute (Pinokio conda python, not host python3.11)
     {
-      when: "{{platform === 'linux'}}",
+      when: "{{platform === 'linux' || platform === 'win32'}}",
       method: "shell.run",
       params: {
         venv: ".venv-sheetsage2",

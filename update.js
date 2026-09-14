@@ -20,7 +20,7 @@ module.exports = {
       }
     },
     {
-      when: "{{platform === 'linux'}}",
+      when: "{{platform === 'linux' || platform === 'win32'}}",
       method: "shell.run",
       params: {
         venv: "env",
