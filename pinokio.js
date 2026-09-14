@@ -3,7 +3,7 @@ const path = require("path")
 module.exports = {
   version: "8.0",
   title: "YUE2 // GROOVE",
-  description: "Unofficial Gradio UI for YuE2 — song generation AND SheetSage2 Cover. Dual venv. Weights CC BY-NC 4.0. macOS ≥32GB or Linux NVIDIA ≥24GB; Windows untested.",
+  description: "Unofficial Gradio UI for YuE2 — song generation AND SheetSage2 Cover. Dual venv. Weights CC BY-NC 4.0. Recommended: macOS Apple Silicon ≥32GB unified, or Linux NVIDIA ≥24GB VRAM. Windows untested.",
   icon: "icon.png",
   menu: async (kernel, info) => {
     // Full install = cloned app + groove venv + SheetSage2 venv

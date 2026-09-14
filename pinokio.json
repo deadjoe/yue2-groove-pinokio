@@ -1,6 +1,6 @@
 {
   "title": "YUE2 // GROOVE",
-  "description": "Unofficial Gradio UI for YuE2: song generation and SheetSage2 Cover (dual venv + ffmpeg). Default SONG view. Model weights are CC BY-NC 4.0 (non-commercial). macOS Apple Silicon \u226532GB or Linux NVIDIA \u226524GB; Windows untested. Larger disk (YuE2 + SheetSage2; MERT may download on first Cover).",
+  "description": "Unofficial Gradio UI for YuE2: song generation and SheetSage2 Cover (dual venv + ffmpeg). Default SONG view. Model weights are CC BY-NC 4.0 (non-commercial). Recommended: macOS Apple Silicon \u226532GB unified memory, or Linux NVIDIA \u226524GB VRAM (not enforced). Windows untested. Larger disk (YuE2 + SheetSage2; MERT may download on first Cover).",
   "icon": "icon.png",
   "links": [
     {

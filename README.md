@@ -15,10 +15,15 @@ Install declares `requires.bundle = "ai"`. Pinokio installs its AI setup preset 
 ## Requirements
 
 - [Pinokio Desktop](https://pinokio.computer)
-- **macOS Apple Silicon with ≥ 32 GB** unified memory, **or**
-- **Linux + NVIDIA GPU with ≥ 24 GB** VRAM
-- **Windows:** not blocked; Install follows the Linux CUDA dependency path (untested)
 - Disk space for YuE2 (~8 GB) plus SheetSage2 (and MERT-v2-FullSong on first Cover)
+
+### Recommended hardware
+
+Not enforced by the launcher — install will proceed either way.
+
+- **macOS:** Apple Silicon with **≥ 32 GB** unified memory (from `yue2_groove` guidance; developed on 64 GB)
+- **Linux:** NVIDIA GPU with BF16 and **≥ 24 GB** VRAM (YuE2 upstream baseline)
+- **Windows:** untested; Install uses the same CUDA dependency path as Linux
 
 ## License notice
 
