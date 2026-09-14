@@ -30,7 +30,6 @@ module.exports = {
         venv: "env",
         path: "app",
         message: [
-          "python -m pip install -U pip uv",
           "uv pip install -e \".[yue2]\" --overrides overrides/macos.txt"
         ]
       }
@@ -42,7 +41,6 @@ module.exports = {
         venv: "env",
         path: "app",
         message: [
-          "python -m pip install -U pip uv",
           "uv pip install -e \".[yue2]\" --overrides overrides/linux.txt"
         ]
       }
@@ -70,9 +68,8 @@ module.exports = {
         venv: ".venv-sheetsage2",
         path: "app",
         message: [
-          "python -m pip install -U pip",
-          "python -m pip install huggingface-hub==0.36.0",
-          "python -m pip install torch==2.8.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu126"
+          "uv pip install huggingface-hub==0.36.0",
+          "uv pip install torch==2.8.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu126"
         ]
       }
     },
@@ -83,9 +80,8 @@ module.exports = {
         venv: ".venv-sheetsage2",
         path: "app",
         message: [
-          "python -m pip install -U pip",
-          "python -m pip install huggingface-hub==0.36.0",
-          "python -m pip install torch==2.8.0 torchaudio==2.8.0"
+          "uv pip install huggingface-hub==0.36.0",
+          "uv pip install torch==2.8.0 torchaudio==2.8.0"
         ]
       }
     },
@@ -103,7 +99,7 @@ module.exports = {
       params: {
         venv: ".venv-sheetsage2",
         path: "app",
-        message: "python -m pip install -r models/SheetSage2/requirements.txt"
+        message: "uv pip install -r models/SheetSage2/requirements.txt"
       }
     },
 

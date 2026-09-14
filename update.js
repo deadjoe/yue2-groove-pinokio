@@ -34,7 +34,7 @@ module.exports = {
       params: {
         venv: ".venv-sheetsage2",
         path: "app",
-        message: "python -m pip install -r models/SheetSage2/requirements.txt"
+        message: "uv pip install -r models/SheetSage2/requirements.txt"
       }
     },
     {
