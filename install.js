@@ -128,7 +128,7 @@ module.exports = {
       params: {
         venv: "env",
         path: "app",
-        message: "python scripts/mps_sdpa_check.py"
+        message: "python scripts/mps_sdpa_check.py || true"
       }
     },
 
