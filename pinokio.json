@@ -2,6 +2,9 @@
   "title": "YUE2 // GROOVE",
   "description": "YUE2 // GROOVE is the latest music studio built on the open-source Yue2 model and its inference stack. Generate high-quality full songs from style and lyrics with an editable score plan — powered by the latest YuE model — cover from audio with SheetSage2 and MERT2, refine and compare edits, and keep your works in a reusable, easy-to-manage library. You get high-quality creation with real creative control.",
   "icon": "icon.png",
+  "posts": [
+    "https://pinokio.co/posts/01m2fmdz71gjkffjwjz86ccv15"
+  ],
   "links": [
     {
       "title": "Groove (app)",
