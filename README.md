@@ -1,6 +1,6 @@
 # YUE2 // GROOVE — Pinokio launcher
 
-One-click local launcher for [yue2_groove](https://github.com/deadjoe/yue2_groove), the unofficial Gradio UI for [YuE2](https://github.com/multimodal-art-projection/YuE).
+YUE2 // GROOVE is the latest music studio built on the open-source Yue2 model and its inference stack. Generate high-quality full songs from style and lyrics with an editable score plan — powered by the latest YuE model — cover from audio with SheetSage2 and MERT2, refine and compare edits, and keep your works in a reusable, easy-to-manage library. You get high-quality creation with real creative control.
 
 ## What you get
 

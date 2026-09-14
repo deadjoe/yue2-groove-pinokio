@@ -3,7 +3,7 @@ const path = require("path")
 module.exports = {
   version: "8.0",
   title: "YUE2 // GROOVE",
-  description: "Unofficial Gradio UI for YuE2 — song generation AND SheetSage2 Cover. Dual venv. Weights CC BY-NC 4.0. Recommended: macOS Apple Silicon ≥32GB unified, or Linux NVIDIA ≥24GB VRAM. Windows untested.",
+  description: "YUE2 // GROOVE is the latest music studio built on the open-source Yue2 model and its inference stack. Generate high-quality full songs from style and lyrics with an editable score plan \u2014 powered by the latest YuE model \u2014 cover from audio with SheetSage2 and MERT2, refine and compare edits, and keep your works in a reusable, easy-to-manage library. You get high-quality creation with real creative control.",
   icon: "icon.png",
   menu: async (kernel, info) => {
     // Full install = cloned app + groove venv + SheetSage2 venv
