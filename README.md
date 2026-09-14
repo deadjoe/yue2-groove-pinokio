@@ -18,6 +18,23 @@ YUE2 // GROOVE is the latest music studio built on the open-source Yue2 model an
 
 This is the complete app: YuE2 song generation **and** SheetSage2 Cover.
 
+## Screenshots
+
+**Pinokio Explore** — Installable app page:
+
+<img src="docs/images/pinokio-app-page.png" alt="YUE2 // GROOVE on Pinokio Explore" width="100%">
+
+**SONG** — start (NEW / COVER / EDIT):
+
+<img src="docs/images/song-start-dark.png" alt="SONG view start cards" width="100%">
+
+**SONG** — after generate:
+
+<img src="docs/images/song-audio-dark.png" alt="SONG view with audio and score" width="100%">
+
+More UI shots live in the [yue2_groove README](https://github.com/deadjoe/yue2_groove#screenshots).
+
+
 Install declares `requires.bundle = "ai"`. Pinokio installs its AI setup preset (conda, git, ffmpeg, uv, huggingface, …) automatically before the script runs. You do not install those by hand.
 
 ## Requirements
@@ -40,20 +57,22 @@ This launcher and `yue2_groove` UI code are Apache-2.0. By installing you agree 
 
 ## Install via Pinokio
 
-Use **Discover → Download from URL** (or the Discover app page → Install). On a clean Pinokio home, that path runs Pinokio's **Dev Setup** (conda/git/ffmpeg/…) **before** cloning.
+**Easiest:** open the [app page on Pinokio](https://pinokio.co/apps/github-com-deadjoe-yue2-groove-pinokio) → **Install** → **Start**.
 
-Do **not** use Create / Plugins → “Download from Git URL” on a fresh install — that Universal Launcher path skips the bin seed and can fail with `conda: command not found`.
+Or from Desktop:
 
-1. Open Pinokio → Discover → **Download from URL**
-2. Paste:
+1. Open Pinokio → **Explore** / Discover → search `YUE2 // GROOVE` (or **Download from URL**)
+2. If using URL, paste:
 
    ```text
    https://github.com/deadjoe/yue2-groove-pinokio
    ```
 
-3. If Setup appears, finish it, then complete the download
-4. Click **Install** (may also open AI setup via `requires.bundle`, then download weights)
+3. Finish **Dev Setup** if it appears, then complete download
+4. Click **Install** (AI bundle via `requires.bundle`, then weights)
 5. Click **Start** → **Open Web UI**
+
+> On a brand-new Pinokio home, prefer **Explore / Discover → Download from URL** (or the app-page Install). Avoid Create / Plugins → “Download from Git URL” — that Universal Launcher path can skip the bin seed and fail with `conda: command not found`.
 
 ## What Install does
 
