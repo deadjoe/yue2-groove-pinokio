@@ -27,6 +27,10 @@ This launcher and `yue2_groove` UI code are Apache-2.0. By installing you agree 
 
 ## Install via Pinokio
 
+Use **Discover → Download from URL** (or the Discover app page → Install). On a clean Pinokio home, that path runs Pinokio's **Dev Setup** (conda/git/ffmpeg/…) **before** cloning.
+
+Do **not** use Create / Plugins → “Download from Git URL” on a fresh install — that Universal Launcher path skips the bin seed and can fail with `conda: command not found`.
+
 1. Open Pinokio → Discover → **Download from URL**
 2. Paste:
 
@@ -34,8 +38,9 @@ This launcher and `yue2_groove` UI code are Apache-2.0. By installing you agree 
    https://github.com/deadjoe/yue2-groove-pinokio
    ```
 
-3. Click **Install** (first run may open Pinokio's AI setup, then download weights)
-4. Click **Start** → **Open Web UI**
+3. If Setup appears, finish it, then complete the download
+4. Click **Install** (may also open AI setup via `requires.bundle`, then download weights)
+5. Click **Start** → **Open Web UI**
 
 ## What Install does
 
