@@ -41,7 +41,7 @@ This launcher and `yue2_groove` UI code are Apache-2.0. By installing you agree 
 
 | Step | Detail |
 |---|---|
-| AI bundle | `requires.bundle = "ai"` — Pinokio setup installs conda/git/ffmpeg/uv/huggingface if missing |
+| AI bundle | `requires.bundle = "ai"` plus first step `kernel.bin.install` `mode: "ai"` (same as Pinokio setup UI) |
 | Clone | `yue2_groove` → `app/` when `app/pyproject.toml` is missing |
 | Groove venv | official `venv: "env"` — `uv pip install -e ".[yue2]"` with `overrides/{macos,linux}.txt` |
 | SheetSage2 venv | official `venv: ".venv-sheetsage2"` + torch 2.8 |

@@ -6,6 +6,14 @@ module.exports = {
     bundle: "ai"
   },
   run: [
+    // Explicit AI preset install (same RPC as Pinokio /setup UI).
+    // Complements requires.bundle: installs conda/git/ffmpeg/uv/huggingface if missing.
+    {
+      method: "kernel.bin.install",
+      params: {
+        mode: "ai"
+      }
+    },
     {
       when: "{{platform === 'win32'}}",
       method: "notify",
