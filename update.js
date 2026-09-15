@@ -28,6 +28,17 @@ module.exports = {
         message: "uv pip install -e \".[yue2]\" --overrides overrides/linux.txt"
       }
     },
+    // Keep CUDA torch on NVIDIA if the reinstall above pulled PyPI's wheel back in.
+    {
+      method: "script.start",
+      params: {
+        uri: "torch.js",
+        params: {
+          path: "app",
+          venv: "env"
+        }
+      }
+    },
     {
       when: "{{exists('app/.venv-sheetsage2') && exists('app/models/SheetSage2/requirements.txt')}}",
       method: "shell.run",

@@ -15,11 +15,19 @@ module.exports = {
       }
     },
     // Recover an empty app/ (Pinokio may create app/env before clone).
+    // fs.rm instead of `rm -rf`: the default Windows shell is cmd.exe.
+    {
+      when: "{{!exists('app/pyproject.toml')}}",
+      method: "fs.rm",
+      params: {
+        path: "app"
+      }
+    },
     {
       when: "{{!exists('app/pyproject.toml')}}",
       method: "shell.run",
       params: {
-        message: "rm -rf app && git clone --depth 1 https://github.com/deadjoe/yue2_groove.git app"
+        message: "git clone --depth 1 https://github.com/deadjoe/yue2_groove.git app"
       }
     },
 
@@ -57,6 +65,18 @@ module.exports = {
           "uv pip install \"huggingface-hub==0.36.2\"",
           "python -c \"from pathlib import Path; import gradio; p=Path(gradio.__file__).parent/'templates'/'frontend'/'index.html'; assert p.is_file(), p\""
         ]
+      }
+    },
+
+    // CUDA torch for NVIDIA (PyPI's Windows torch wheel is CPU-only). No-op on macOS.
+    {
+      method: "script.start",
+      params: {
+        uri: "torch.js",
+        params: {
+          path: "app",
+          venv: "env"
+        }
       }
     },
 
@@ -142,6 +162,15 @@ module.exports = {
         venv: ".venv-sheetsage2",
         path: "app",
         message: "python -c \"import torch, transformers\""
+      }
+    },
+    {
+      when: "{{gpu === 'nvidia'}}",
+      method: "shell.run",
+      params: {
+        venv: "env",
+        path: "app",
+        message: "python -c \"import torch; assert torch.cuda.is_available(), 'torch ' + torch.__version__ + ' has no CUDA support'; print('CUDA torch', torch.__version__, torch.cuda.get_device_name(0))\""
       }
     },
 
