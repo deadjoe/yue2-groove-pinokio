@@ -1,19 +1,13 @@
 module.exports = {
-  // Pinokio 8: declare the AI setup preset. Server checks kernel.bin.preset("ai")
-  // and redirects to /setup/ai before this script runs if conda/git/ffmpeg/uv
-  // are missing. Same pattern as pinokiofactory/wan.
+  // Pinokio's AI setup preset (conda/git/ffmpeg/uv/huggingface, CUDA on NVIDIA).
+  // The server checks it and redirects to /setup/ai before this script runs, the
+  // same as every official launcher. Do not add an explicit kernel.bin.install:
+  // it re-runs the whole preset, and its bun step fails on Windows when the
+  // freshly unpacked bun.exe is still locked (Defender) during npm's rename.
   requires: {
     bundle: "ai"
   },
   run: [
-    // Explicit AI preset install (same RPC as Pinokio /setup UI).
-    // Complements requires.bundle: installs conda/git/ffmpeg/uv/huggingface if missing.
-    {
-      method: "kernel.bin.install",
-      params: {
-        mode: "ai"
-      }
-    },
     // Recover an empty app/ (Pinokio may create app/env before clone).
     // fs.rm instead of `rm -rf`: the default Windows shell is cmd.exe.
     {

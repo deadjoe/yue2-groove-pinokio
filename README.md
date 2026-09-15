@@ -89,7 +89,7 @@ Or from Desktop:
 
 | Step | Detail |
 |---|---|
-| AI bundle | `requires.bundle = "ai"` plus first step `kernel.bin.install` `mode: "ai"` (same as Pinokio setup UI) |
+| AI bundle | `requires.bundle = "ai"` — Pinokio's own setup installs conda/git/ffmpeg/uv/huggingface (and CUDA on NVIDIA) before Install runs, as in every official launcher |
 | Clone | `yue2_groove` → `app/` when `app/pyproject.toml` is missing |
 | Groove venv | official `venv: "env"` — `uv pip install -e ".[yue2]"` with `overrides/{macos,linux}.txt` |
 | CUDA torch | `torch.js` (Pinokio's standard pattern): on NVIDIA Linux/Windows reinstalls `torch==2.10.0` from the `cu128` index — PyPI's Windows wheel is CPU-only. No-op on macOS |
