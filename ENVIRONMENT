@@ -4,6 +4,12 @@
 YUE2_GROOVE_VIEW=song
 YUE2_GROOVE_HOST=127.0.0.1
 
+# Windows: Python's default text encoding is the ANSI code page (cp1252 / cp936).
+# UTF-8 mode makes the web UI *and* the SheetSage2 / doctor child processes it
+# spawns agree on UTF-8, so non-ASCII paths and JSON survive the pipe.
+# No effect on macOS / Linux, which are UTF-8 already.
+PYTHONUTF8=1
+
 # Apple Silicon memory guard (ignored on CUDA/CPU)
 PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.8
 PYTORCH_MPS_LOW_WATERMARK_RATIO=0.5

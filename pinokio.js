@@ -3,7 +3,7 @@ const path = require("path")
 module.exports = {
   version: "8.0",
   title: "YUE2 // GROOVE",
-  description: "YUE2 // GROOVE is the latest music studio built on the open-source Yue2 model and its inference stack. Generate high-quality full songs from style and lyrics with an editable score plan \u2014 powered by the latest YuE model \u2014 cover from audio with SheetSage2 and MERT2, refine and compare edits, and keep your works in a reusable, easy-to-manage library. You get high-quality creation with real creative control. Hardware: NVIDIA GPU with 24 GB VRAM (YuE2's validated setup, Linux/Windows) or Apple Silicon Mac with 32 GB+ unified memory. YuE2 ships as a full BF16 model with no quantized build; the memory budget / AR offload / experimental FP8 knobs in Settings are unvalidated below 24 GB.",
+  description: "YUE2 // GROOVE is the latest music studio built on the open-source Yue2 model and its inference stack. Generate high-quality full songs from style and lyrics with an editable score plan \u2014 powered by the latest YuE model \u2014 cover from audio with SheetSage2 and MERT2, refine and compare edits, and keep your works in a reusable, easy-to-manage library. You get high-quality creation with real creative control. Hardware: an NVIDIA GPU with 24 GB VRAM on Linux (YuE2's validated setup) or an Apple Silicon Mac with 32 GB+ unified memory (where this app is developed and tested). Windows + NVIDIA gets the CUDA build installed but is untested. YuE2 is one unquantized BF16 model; the memory budget / AR offload / experimental FP8 knobs in Settings are unvalidated below 24 GB.",
   icon: "icon.png",
   menu: async (kernel, info) => {
     // Full install = cloned app + groove venv + SheetSage2 venv

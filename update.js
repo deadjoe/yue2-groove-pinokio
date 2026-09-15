@@ -3,6 +3,13 @@ module.exports = {
     bundle: "ai"
   },
   run: [
+    // Launcher scripts first (same as Pinokio's yue example), then the app.
+    {
+      method: "shell.run",
+      params: {
+        message: "git pull --ff-only"
+      }
+    },
     {
       method: "shell.run",
       params: {
