@@ -116,6 +116,17 @@ module.exports = {
         message: "uv pip install -r models/SheetSage2/requirements.txt"
       }
     },
+    // SheetSage2 is an adapter on MERT-v2-FullSong, pinned to one commit in its
+    // config.json. Fetch that exact snapshot into the HF cache now so Cover never
+    // needs huggingface.co at run time (the adapter looks it up by commit hash).
+    {
+      method: "shell.run",
+      params: {
+        venv: ".venv-sheetsage2",
+        path: "app",
+        message: "python -c \"import json; from huggingface_hub import snapshot_download; c=json.load(open('models/SheetSage2/config.json', encoding='utf-8')); print(snapshot_download(c['base_model_name_or_path'], revision=c['base_model_revision']))\""
+      }
+    },
 
     {
       method: "hf.download",
@@ -171,7 +182,7 @@ module.exports = {
     {
       method: "notify",
       params: {
-        html: "<b>Install finished.</b><br/>Full app ready: YuE2 generation <b>and</b> SheetSage2 Cover (dual venv).<br/>YuE2 / SheetSage2 / MERT weights are <b>CC BY-NC 4.0</b> (non-commercial).<br/>MERT-v2-FullSong may download on the <b>first Cover</b> transcription.<br/>Click <b>Start</b> — UI opens in the SONG view."
+        html: "<b>Install finished.</b><br/>Full app ready: YuE2 generation <b>and</b> SheetSage2 Cover (dual venv).<br/>YuE2 / SheetSage2 / MERT weights are <b>CC BY-NC 4.0</b> (non-commercial).<br/>SheetSage2 and its MERT-v2-FullSong base are downloaded; Cover needs no network.<br/>Click <b>Start</b> — UI opens in the SONG view."
       }
     }
   ]

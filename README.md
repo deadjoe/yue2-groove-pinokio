@@ -41,7 +41,7 @@ Install declares `requires.bundle = "ai"`. Pinokio installs its AI setup preset 
 ## Requirements
 
 - [Pinokio Desktop](https://pinokio.computer)
-- Disk space for YuE2 (~8 GB) plus SheetSage2 (and MERT-v2-FullSong on first Cover)
+- About 11 GB of disk for weights: YuE2-3B + VAE (7.8 GB), MERT-v2-FullSong (2.4 GB), SheetSage2 (0.2 GB) — all fetched by Install
 
 ### Hardware
 
@@ -94,15 +94,15 @@ Or from Desktop:
 | Groove venv | official `venv: "env"` — `uv pip install -e ".[yue2]"` with `overrides/{macos,linux}.txt` |
 | CUDA torch | `torch.js` (Pinokio's standard pattern): on NVIDIA Linux/Windows reinstalls `torch==2.10.0` from the `cu128` index — PyPI's Windows wheel is CPU-only. No-op on macOS |
 | SheetSage2 venv | official `venv: ".venv-sheetsage2"` + torch 2.8 |
-| Weights | official `hf.download` for `m-a-p/SheetSage2`, `m-a-p/YuE2-3B`, `m-a-p/YuE2-Vae` |
+| Weights | official `hf.download` for `m-a-p/SheetSage2` (to `app/models/SheetSage2`), `m-a-p/YuE2-3B`, `m-a-p/YuE2-Vae`; then the MERT-v2-FullSong snapshot pinned in SheetSage2's `config.json` (`base_model_revision`) into the HF cache |
 | Verify | groove + yue2 + Gradio frontend; Cover venv imports torch/transformers; on NVIDIA, `torch.cuda.is_available()` must be true |
 
-**MERT-v2-FullSong** is not pre-downloaded — the first Cover transcription may pull it from Hugging Face.
+Cover needs no network after Install: Start passes `YUE2_GROOVE_MODELS=app/models` so the app uses the downloaded SheetSage2, and the adapter finds its MERT base in the cache by commit hash.
 
 ## Notes
 
 - macOS installs groove torch via `overrides/macos.txt` (2.14). Linux/Windows + NVIDIA get `torch==2.10.0+cu128` from `torch.js` (the pin must track upstream YuE2's `torch==`). SheetSage2 uses torch 2.8.0 (CPU/MPS index on Mac, cu126 on Linux/Windows).
-- Start uses `python -m yue2_groove … --sheetsage-python …` so Pinokio owns the process and Cover is configured. The venv path is built with `path.resolve(cwd, …)` (cmd.exe on Windows does not expand `$PWD`).
+- Start uses `python -m yue2_groove … --sheetsage-python …` so Pinokio owns the process and Cover is configured. The venv path and `YUE2_GROOVE_MODELS` are built with `path.resolve(cwd, …)` (cmd.exe on Windows does not expand `$PWD`).
 - Apple Silicon starts with MPS watermark defaults (`0.8` / `0.5`) from `ENVIRONMENT`.
 - To wipe both Python envs only: **Reset**. Weight cache and `models/SheetSage2` are kept.
 

@@ -55,6 +55,16 @@ module.exports = {
         message: "uv pip install -r models/SheetSage2/requirements.txt"
       }
     },
+    // Existing installs: fetch the pinned MERT-v2-FullSong snapshot (cache hit = instant).
+    {
+      when: "{{exists('app/.venv-sheetsage2') && exists('app/models/SheetSage2/config.json')}}",
+      method: "shell.run",
+      params: {
+        venv: ".venv-sheetsage2",
+        path: "app",
+        message: "python -c \"import json; from huggingface_hub import snapshot_download; c=json.load(open('models/SheetSage2/config.json', encoding='utf-8')); print(snapshot_download(c['base_model_name_or_path'], revision=c['base_model_revision']))\""
+      }
+    },
     {
       method: "shell.run",
       params: {
