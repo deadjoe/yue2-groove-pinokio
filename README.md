@@ -4,12 +4,12 @@
   <a href="https://pinokio.computer"><img src="https://img.shields.io/badge/one--click-Pinokio-F4A261" alt="One-click Pinokio launcher"></a>
   <a href="https://github.com/multimodal-art-projection/YuE"><img src="https://img.shields.io/badge/model-Yue2-7C3AED?logo=github&logoColor=white" alt="Yue2 model"></a>
   <a href="https://huggingface.co/m-a-p/SheetSage2"><img src="https://img.shields.io/badge/cover-SheetSage2%20%2B%20MERT2-0A9396" alt="SheetSage2 + MERT2"></a>
-  <img src="https://img.shields.io/badge/platform-macOS%20%C2%B7%20Linux%20%C2%B7%20Windows-0EA5E9" alt="macOS · Linux · Windows">
+  <img src="https://img.shields.io/badge/platform-macOS%20%C2%B7%20Linux-0EA5E9" alt="macOS · Linux">
   <img src="https://img.shields.io/badge/hardware-24%20GB%20VRAM%20or%2032%20GB%20Apple%20Silicon-EF4444" alt="24 GB VRAM or 32 GB Apple Silicon">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue" alt="Apache 2.0"></a>
 </p>
 
-YUE2 // GROOVE is the latest music studio built on the open-source Yue2 model and its inference stack. Generate high-quality full songs from style and lyrics with an editable score plan — powered by the latest YuE model — cover from audio with SheetSage2 and MERT2, refine and compare edits, and keep your works in a reusable, easy-to-manage library. You get high-quality creation with real creative control. Hardware: an NVIDIA GPU with 24 GB VRAM on Linux (YuE2's validated setup) or an Apple Silicon Mac with 32 GB+ unified memory (where this app is developed and tested). Windows + NVIDIA: install, launch and Cover verified on Windows 11 with an RTX 2070 (8 GB); song generation itself still needs 24 GB. YuE2 is one unquantized BF16 model; the memory budget / AR offload / experimental FP8 knobs in Settings are unvalidated below 24 GB.
+YUE2 // GROOVE is the latest music studio built on the open-source Yue2 model and its inference stack. Generate high-quality full songs from style and lyrics with an editable score plan — powered by the latest YuE model — cover from audio with SheetSage2 and MERT2, refine and compare edits, and keep your works in a reusable, easy-to-manage library. You get high-quality creation with real creative control. Hardware: an NVIDIA GPU with 24 GB VRAM on Linux (YuE2's recommended setup, validated end-to-end here on an NVIDIA L4; a 16 GB memory budget completed a full-length song bit-identical to 24 GB) or an Apple Silicon Mac with 32 GB+ unified memory (where this app is developed and tested). Windows is not a supported platform: install, launch and Cover were verified once on Windows 11 (RTX 2070, 8 GB); song generation has not been run there and gets best-effort help only. YuE2 has no official quantized weights and Groove runs the unmodified BF16 model; a 12 GB memory budget needs the experimental FP8 mode (about 4x slower), and AR offload is unvalidated.
 
 ## What you get
 
@@ -45,21 +45,21 @@ Install declares `requires.bundle = "ai"`. Pinokio installs its AI setup preset 
 
 ### Hardware
 
-- **macOS — tested.** Apple Silicon with **≥ 32 GB** unified memory. This is the platform the app and this launcher are developed and tested on (a 64 GB machine).
-- **Linux + NVIDIA — upstream's platform, not exercised by the author.** GPU with BF16 and **≥ 24 GB** VRAM is YuE2 upstream's only validated configuration. Install puts the CUDA (cu128) torch build into the groove venv via `torch.js` and fails if `torch.cuda.is_available()` is still false.
-- **Windows + NVIDIA — install, launch and Cover verified** (Windows 11, RTX 2070 8 GB, 2026-09-15): `torch.js` puts `torch 2.10.0+cu128` in place of PyPI's CPU-only Windows wheel, `yue2 doctor` verifies the weights, and a SheetSage2 transcription runs on the GPU. Song generation needs 24 GB and has not been run on Windows; YuE2 upstream does not list Windows as a supported platform.
+- **macOS — tested.** Apple Silicon with **≥ 32 GB** unified memory. This is the platform the app and this launcher are developed and tested on (two 64 GB machines, M1 Max and M4 Pro).
+- **Linux + NVIDIA — validated end-to-end.** GPU with BF16 and **≥ 24 GB** VRAM is YuE2 upstream's recommended configuration; the app was validated on an NVIDIA L4 (generation, memory budget, FP8 — see the app's [LINUX_CUDA.md](https://github.com/deadjoe/yue2_groove/blob/main/docs/LINUX_CUDA.md)). A full-length song peaks at about 10.5–10.8 GiB, and a **16 GB memory budget** completed the same song **bit-identical** to the 24 GB run; a physical 16 GB card has not been tested yet. Install puts the CUDA (cu128) torch build into the groove venv via `torch.js` and fails if `torch.cuda.is_available()` is still false.
+- **Windows + NVIDIA — not a supported platform; best effort only.** Install, launch and Cover were verified once (Windows 11, RTX 2070 8 GB, 2026-09-15): `torch.js` puts `torch 2.10.0+cu128` in place of PyPI's CPU-only Windows wheel, `yue2 doctor` verifies the weights, and a SheetSage2 transcription runs on the GPU. Song generation has not been run on Windows, and YuE2 upstream does not list Windows as a supported platform. Known: the first user attempt hit an upstream FlashAttention check bug (`USE_FLASH_ATTENTION was not enabled for build`, fix pending in [YuE PR #166](https://github.com/multimodal-art-projection/YuE/pull/166)); the app now falls back to upstream's slower eager decoder on such hosts. A full-length song needs ~11 GB of VRAM regardless.
 
 Memory is not enforced — install proceeds either way.
 
 ### Lower VRAM
 
-YuE2 ships as one **unquantized BF16** model (3B weights ≈ 7 GB, the rest of the 24 GB is KV cache, NAR synthesis and VAE decode). There is no int8/int4/GGUF build. What upstream offers, all reachable from the **Settings** rail:
+YuE2 ships as one **unquantized BF16** model: the weights are 7.3 GB, and a measured full-length song (4:45, CFG 1.5) peaks at about **10.5–10.8 GiB** of VRAM including the KV cache, acoustic synthesis and VAE decode. There are **no official quantized weights**; community int8 / GGUF / MLX ports exist but are a different numerical configuration (see the [post on why Groove keeps the reference configuration](https://pinokio.co/posts/01m2qdmjd6b7apgg09mg9z9tv7)). What upstream offers, all reachable from the **Settings** rail:
 
-- **MEMORY BUDGET** — the GiB YuE2 may use (`≤ 12` also halves the VAE decode window)
-- **OFFLOAD AR WEIGHTS** — moves the AR stack to CPU during acoustic synthesis
-- **QUANTIZATION = fp8** — experimental, AR linears only, needs an RTX 40-series or newer (compute capability ≥ 8.9); upstream marks its quality as unvalidated
+- **MEMORY BUDGET** — a hard cap on the GiB YuE2 may allocate (`≤ 12` also halves the VAE decode window). **16 validated**: bit-identical output to 24 on an L4. **12 fails in BF16** for a full-length song (out of memory at the semantic stage).
+- **QUANTIZATION = fp8** — upstream's experimental mode, AR linears only, needs an RTX 40-series or newer (compute capability ≥ 8.9); upstream makes no quality claim. Completes on a 12 GB budget at about 4× the generation time (measured on an L4).
+- **OFFLOAD AR WEIGHTS** — moves the AR stack to CPU during acoustic synthesis. Unvalidated.
 
-None of these are validated below 24 GB by upstream or by this launcher. If you try them on a 12–16 GB card, reports are welcome.
+If you try these on a 12–16 GB card, reports are welcome.
 
 ## License notice
 
