@@ -3,6 +3,14 @@
 Each entry is one app release.  To get it: open YUE2 // GROOVE in Pinokio, click
 **Update**, then **Start**.  The footer of the page shows the version you are on.
 
+## 0.9.1 — 2026-09-20
+
+- **iPhone / iPad:** tapping a text field (STYLE, LYRICS, SEED …) no longer zooms the
+  page in, and the page no longer stays zoomed after you leave the field.  Pinch zoom
+  still works.
+
+**Full details:** https://github.com/deadjoe/yue2_groove/releases/tag/v0.9.1
+
 ## 0.9.0 — 2026-09-19
 
 **Fixes you will notice**
