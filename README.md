@@ -19,6 +19,9 @@ YUE2 // GROOVE is the latest music studio built on the open-source Yue2 model an
 
 This is the complete app: YuE2 song generation **and** SheetSage2 Cover.
 
+New versions of the app arrive through **Update**; what each one changes is in
+[CHANGELOG.md](CHANGELOG.md).
+
 ## Screenshots
 
 **Pinokio Explore** — Installable app page:
