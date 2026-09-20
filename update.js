@@ -35,6 +35,18 @@ module.exports = {
         message: "uv pip install -e \".[yue2]\" --overrides overrides/linux.txt"
       }
     },
+    // The optional GGUF engine (docs/GGUF_ENGINE.md): this platform's yue2.cpp binaries from
+    // the app's release into app/bin/yue2cpp. Idempotent (an install at the pinned commit is
+    // kept). Not fatal: without the binaries the app runs exactly as before and its log says
+    // that the engine would fit a small card.
+    {
+      method: "shell.run",
+      params: {
+        venv: "env",
+        path: "app",
+        message: "python -m yue2_groove.gguf_engine install --tag latest || echo GGUF engine binaries not installed - the app keeps the PyTorch engine"
+      }
+    },
     // Keep CUDA torch on NVIDIA if the reinstall above pulled PyPI's wheel back in.
     {
       method: "script.start",
@@ -76,7 +88,7 @@ module.exports = {
     {
       method: "notify",
       params: {
-        html: "Updated (groove + SheetSage2 deps). Click <b>Start</b> to relaunch."
+        html: "Updated (groove + SheetSage2 deps + GGUF engine binaries). Click <b>Start</b> to relaunch."
       }
     }
   ]

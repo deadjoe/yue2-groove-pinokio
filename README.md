@@ -50,19 +50,32 @@ Install declares `requires.bundle = "ai"`. Pinokio installs its AI setup preset 
 
 - **macOS — tested.** Apple Silicon with **≥ 32 GB** unified memory. This is the platform the app and this launcher are developed and tested on (two 64 GB machines, M1 Max and M4 Pro).
 - **Linux + NVIDIA — validated end-to-end, two sessions.** GPU with BF16 and **≥ 24 GB** VRAM is YuE2 upstream's recommended configuration; the app was validated on NVIDIA L4 hosts (generation, Cover, memory budgets, FP8, cross-host reproducibility — see the app's [LINUX_CUDA.md](https://github.com/deadjoe/yue2_groove/blob/main/docs/LINUX_CUDA.md)). A full-length song peaks at about 10.5–10.8 GiB; a **16 GB memory budget** completed the same song **bit-identical** to the 24 GB run and also the longest song the app can produce (11.6 GiB); a **12 GB budget** runs the unquantized model at CFG 1.0 (9.6 GiB) or for songs up to a few minutes. No physical 16 GB or 12 GB card has been tested — these are allocation caps on an L4. Install puts the CUDA (cu128) torch build into the groove venv via `torch.js` and fails if `torch.cuda.is_available()` is still false.
-- **Windows + NVIDIA — not a supported platform; best effort only.** Install, launch and Cover were verified once (Windows 11, RTX 2070 8 GB, 2026-09-15): `torch.js` puts `torch 2.10.0+cu128` in place of PyPI's CPU-only Windows wheel, `yue2 doctor` verifies the weights, and a SheetSage2 transcription runs on the GPU. Song generation has not been run on Windows, and YuE2 upstream does not list Windows as a supported platform. Known: the first user attempt hit an upstream FlashAttention check bug (`USE_FLASH_ATTENTION was not enabled for build`, fix pending in [YuE PR #166](https://github.com/multimodal-art-projection/YuE/pull/166)); the app now falls back to upstream's slower eager decoder on such hosts. A full-length song needs ~11 GB of VRAM regardless.
+- **Windows + NVIDIA — best effort, now with a path that fits the card.** Install, launch and Cover were verified on Windows 11 (RTX 2070 8 GB); song generation on Windows runs through the **GGUF engine** below (yue2.cpp brings its own FlashAttention, which PyTorch's Windows build lacks), validated on Linux and macOS and being validated on that Windows machine. A card under 16 GB, or an NVIDIA card next to a CPU-only torch, gets the GGUF engine automatically once its binaries are installed (Install / Update do that).
 
 Memory is not enforced — install proceeds either way.
 
-### Lower VRAM
+### Lower VRAM: the GGUF engine
 
-YuE2 ships as one **unquantized BF16** model: the weights are 7.3 GB, and a measured full-length song (4:45, CFG 1.5) peaks at about **10.5–10.8 GiB** of VRAM including the KV cache, acoustic synthesis and VAE decode. There are **no official quantized weights**; community int8 / GGUF / MLX ports exist but are a different numerical configuration (see the [post on why Groove keeps the reference configuration](https://pinokio.co/posts/01m2qdmjd6b7apgg09mg9z9tv7)). What upstream offers, all reachable from the **Settings** rail:
+YuE2 ships as one **unquantized BF16** model (7.3 GB of weights; a full-length CFG 1.5 song peaks at
+10.5–10.8 GiB in PyTorch). Groove 1.0 adds an optional second engine — the same model through
+[yue2.cpp](https://github.com/ServeurpersoCom/yue2.cpp) with an 8-bit (Q8_0) backbone — for cards the
+reference configuration does not fit:
 
-- **MEMORY BUDGET** — a hard cap on the GiB YuE2 may allocate (`≤ 12` also halves the VAE decode window). **16 validated**: bit-identical output to 24 on an L4, including the longest possible song. **12 in BF16**: passes with CFG 1.0 (upstream's default), with a shorter song, or with a lower semantic token ceiling in SAMPLING; a full-length song at the default CFG 1.5 runs out of memory at the semantic stage.
-- **QUANTIZATION = fp8** — upstream's experimental mode, AR linears only, needs an RTX 40-series or newer (compute capability ≥ 8.9); upstream makes no quality claim. Completes on a 12 GB budget at about 4× the generation time (measured on an L4).
-- **OFFLOAD AR WEIGHTS** — moves the AR stack to CPU during acoustic synthesis. Verified lossless (bit-identical output), but it does not lower the peak for a full-length song — the peak is the semantic stage.
+- **What it costs in quality:** measured with the reference run's own score, tokens and noise, the
+  Q8_0 rendering lands 24 dB from the CUDA reference — the size of a CUDA → Apple-Silicon platform
+  change — and a blind ABX could not tell them apart. It is **not** the reference configuration: the
+  same seed gives a *different take*, and every run records which engine made it.
+- **What it gives:** a full-length CFG 1.5 song at a **peak of 8.2 GB** (measured on an RTX A4000),
+  2.5–6× faster AR stage, no FP8 penalty; 8 GB cards get a context cap automatically (songs up to
+  ~4.9 min). Details, limits and provenance: [docs/GGUF_ENGINE.md](https://github.com/deadjoe/yue2_groove/blob/main/docs/GGUF_ENGINE.md).
+- **Selection:** automatic on a CUDA card under 16 GB (or an NVIDIA card torch cannot see); never on
+  Apple Silicon or ≥ 16 GB, where BACKEND → **gguf** in the Settings rail switches by hand. The GGUF
+  files are prepared from the weights already on disk on the first GGUF generation (about a minute,
+  +4.3 GB, no download).
 
-If you try these on a 12–16 GB card, reports are welcome.
+The PyTorch engine's own knobs stay: **MEMORY BUDGET** (16 validated bit-identical to 24; 12 runs the
+unquantized model at CFG 1.0 or for shorter songs), **QUANTIZATION = fp8** (RTX 40+, ~4× slower) and
+**OFFLOAD AR WEIGHTS** (lossless, does not lower the peak). Reports from 8–12 GB cards are welcome.
 
 ## License notice
 

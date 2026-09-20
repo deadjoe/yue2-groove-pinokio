@@ -62,6 +62,18 @@ module.exports = {
       }
     },
 
+    // The optional GGUF engine (docs/GGUF_ENGINE.md): this platform's yue2.cpp binaries from
+    // the app's release into app/bin/yue2cpp. Idempotent (an install at the pinned commit is
+    // kept). Not fatal: without the binaries the app runs exactly as before and its log says
+    // that the engine would fit a small card.
+    {
+      method: "shell.run",
+      params: {
+        venv: "env",
+        path: "app",
+        message: "python -m yue2_groove.gguf_engine install --tag latest || echo GGUF engine binaries not installed - the app keeps the PyTorch engine"
+      }
+    },
     // CUDA torch for NVIDIA (PyPI's Windows torch wheel is CPU-only). No-op on macOS.
     {
       method: "script.start",
@@ -182,7 +194,7 @@ module.exports = {
     {
       method: "notify",
       params: {
-        html: "<b>Install finished.</b><br/>Full app ready: YuE2 generation <b>and</b> SheetSage2 Cover (dual venv).<br/>YuE2 / SheetSage2 / MERT weights are <b>CC BY-NC 4.0</b> (non-commercial).<br/>SheetSage2 and its MERT-v2-FullSong base are downloaded; Cover needs no network.<br/>Click <b>Start</b> — UI opens in the SONG view."
+        html: "<b>Install finished.</b><br/>Full app ready: YuE2 generation <b>and</b> SheetSage2 Cover (dual venv), plus the optional GGUF engine for cards under 16 GB (used automatically when it fits; a different take for the same seed).<br/>YuE2 / SheetSage2 / MERT weights are <b>CC BY-NC 4.0</b> (non-commercial).<br/>SheetSage2 and its MERT-v2-FullSong base are downloaded; Cover needs no network.<br/>Click <b>Start</b> — UI opens in the SONG view."
       }
     }
   ]
