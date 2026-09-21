@@ -3,6 +3,29 @@
 Each entry is one app release.  To get it: open YUE2 // GROOVE in Pinokio, click
 **Update**, then **Start**.  The footer of the page shows the version you are on.
 
+**If Update seems not to have taken** (the footer still shows the old version, or a new
+feature listed here is missing): quit Pinokio completely, open it again, and click **Update**
+once more.  Pinokio keeps the update steps it loaded at launch until it is restarted, so the
+first Update after a launcher change can run the old steps.
+
+## 1.0.2 — 2026-09-21
+
+**The GGUF engine, now checked on all three platforms**
+
+- The engine from 1.0.1 has now generated full songs on macOS, Linux and Windows — on Windows on
+  an 8 GB card (RTX 2070): a 4:51 song, 6 minutes, 6.1 GB of graphics memory. The docs say what
+  each machine gets and how far it was tested (README → Requirements).
+- **Windows:** the converted model file gets the same name on every platform now. If you already
+  generated a song with 1.0.1 on Windows, the first song after this update converts the model once
+  more (about a minute); the old file is no longer used — the terminal names it, and you can delete
+  it (`app\models\gguf\YuE2-3B-Q8_0-4c1e36b64d88.gguf`, 3.8 GB).
+- The very first song on a machine downloads the model weights (7.3 GB) before anything else
+  happens; the STATUS line now says so instead of sitting silently at 5 %.
+- Update no longer complains about missing engine binaries in the first two hours after a release.
+- Also in the Docker image, for those who run it that way.
+
+**Full details:** https://github.com/deadjoe/yue2_groove/releases/tag/v1.0.2
+
 ## 1.0.1 — 2026-09-21
 
 **A second engine for smaller graphics cards (and Windows)**
@@ -19,6 +42,8 @@ Each entry is one app release.  To get it: open YUE2 // GROOVE in Pinokio, click
   expected, not a fault; within one engine a seed still repeats exactly.
 - Cards with 16 GB or more, and every Mac, keep the original engine. You can switch by hand
   in STUDIO → Settings → BACKEND.
+- If the first song after the update stops with **`No module named 'gguf'`**, Update ran with
+  the old steps: quit Pinokio, open it again, click Update, then Start (see the top of this page).
 
 **Also**
 
