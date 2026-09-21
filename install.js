@@ -32,7 +32,7 @@ module.exports = {
         venv: "env",
         path: "app",
         message: [
-          "uv pip install -e \".[yue2]\" --overrides overrides/macos.txt"
+          "uv pip install -e \".[yue2,gguf]\" --overrides overrides/macos.txt"
         ]
       }
     },
@@ -43,7 +43,7 @@ module.exports = {
         venv: "env",
         path: "app",
         message: [
-          "uv pip install -e \".[yue2]\" --overrides overrides/linux.txt"
+          "uv pip install -e \".[yue2,gguf]\" --overrides overrides/linux.txt"
         ]
       }
     },

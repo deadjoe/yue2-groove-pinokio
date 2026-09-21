@@ -23,7 +23,7 @@ module.exports = {
       params: {
         venv: "env",
         path: "app",
-        message: "uv pip install -e \".[yue2]\" --overrides overrides/macos.txt"
+        message: "uv pip install -e \".[yue2,gguf]\" --overrides overrides/macos.txt"
       }
     },
     {
@@ -32,7 +32,7 @@ module.exports = {
       params: {
         venv: "env",
         path: "app",
-        message: "uv pip install -e \".[yue2]\" --overrides overrides/linux.txt"
+        message: "uv pip install -e \".[yue2,gguf]\" --overrides overrides/linux.txt"
       }
     },
     // The optional GGUF engine (docs/GGUF_ENGINE.md): this platform's yue2.cpp binaries from
