@@ -8,6 +8,25 @@ feature listed here is missing): quit Pinokio completely, open it again, and cli
 once more.  Pinokio keeps the update steps it loaded at launch until it is restarted, so the
 first Update after a launcher change can run the old steps.
 
+## 1.0.3 — 2026-09-22
+
+**Random seeds, and songs up to 12 minutes**
+
+- **SEED is `-1` by default now**, which means "a new random seed every song" — no more typing
+  numbers. The seed that was used is shown in STATUS and saved with the work, so you can type it
+  back in to repeat a take exactly; TRY ANOTHER SEED in the SONG view works as before. (EDIT keeps a
+  fixed seed by default, because an edit is compared against its original.)
+- **Songs can be longer than 6 minutes.** The 6-minute ceiling was the app's, not the model's.
+  In ADVANCED // SAMPLING the length ceiling now goes up to 12 minutes, and a new BUDGET PRESET,
+  **Long song (~10 min)**, sets everything a long song needs. A song still ends when its lyrics
+  end, so a long song needs long lyrics. If the lyrics and score would not leave enough room for
+  the length you asked for, the app shortens the ceiling and tells you in STATUS instead of
+  failing halfway. Two honest notes: nobody has measured the model past 6 minutes, and on the
+  original engine a longer ceiling needs more graphics memory (about 330 MB per extra minute) —
+  on a 12 GB card, stay with the default.
+
+**Full details:** https://github.com/deadjoe/yue2_groove/releases/tag/v1.0.3
+
 ## 1.0.2 — 2026-09-21
 
 **The GGUF engine, now checked on all three platforms**
