@@ -15,7 +15,7 @@ YUE2 // GROOVE is the latest music studio built on the open-source Yue2 model an
 
 1. **Install** clones groove, creates two Pinokio-managed Python environments, downloads YuE2 + SheetSage2 weights, and wires Cover.
 2. **Start** opens the UI on `127.0.0.1` in the **SONG** view (Studio tabs including **02 // COVER** and **03 // EDIT** stay available).
-3. **Update** pulls this launcher and the app, then refreshes both venvs; **Reset** wipes both venvs (clone, `models/`, and HF cache stay).
+3. **Update** pulls this launcher and the app, then refreshes both venvs; **Reset** wipes both venvs and the saved settings (clone, `models/`, and HF cache stay).
 
 This is the complete app: YuE2 song generation **and** SheetSage2 Cover.
 
@@ -120,7 +120,7 @@ Cover needs no network after Install: Start passes `YUE2_GROOVE_MODELS=app/model
 - macOS installs groove torch via `overrides/macos.txt` (2.14). Linux/Windows + NVIDIA get `torch==2.10.0+cu128` from `torch.js` (the pin must track upstream YuE2's `torch==`). SheetSage2 uses torch 2.8.0 (CPU/MPS index on Mac, cu126 on Linux/Windows).
 - Start uses `python -m yue2_groove … --sheetsage-python …` so Pinokio owns the process and Cover is configured. The venv path and `YUE2_GROOVE_MODELS` are built with `path.resolve(cwd, …)` (cmd.exe on Windows does not expand `$PWD`).
 - Apple Silicon starts with MPS watermark defaults (`0.8` / `0.5`) from `ENVIRONMENT`.
-- To wipe both Python envs only: **Reset**. Weight cache and `models/SheetSage2` are kept.
+- To wipe both Python envs and the saved settings: **Reset**. Weight cache and `models/SheetSage2` are kept.
 
 ## Upstream
 

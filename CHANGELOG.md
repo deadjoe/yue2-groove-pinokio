@@ -8,6 +8,24 @@ feature listed here is missing): quit Pinokio completely, open it again, and cli
 once more.  Pinokio keeps the update steps it loaded at launch until it is restarted, so the
 first Update after a launcher change can run the old steps.
 
+## 1.0.4 — 2026-09-23
+
+**Your settings are remembered, and a gear opens them**
+
+- **Settings stay put.** What you pick in the settings (for example BACKEND → `gguf`, or ODE
+  STEPS) is saved the moment you change it, and is still there after a page refresh or the next
+  Start — no more setting the engine again every time. If you pick something this computer cannot
+  run, that one setting goes back to automatic and the STATUS box under the settings says why.
+  **RESET DEFAULTS** in the settings, or **Reset** in Pinokio, puts everything back to the
+  defaults.
+- **A gear icon opens the settings** (top right, next to SONG / STUDIO). It works from the SONG
+  view too now: it switches to STUDIO and opens the settings — on a phone or iPad it scrolls down
+  to them. Click it again in STUDIO to hide them.
+- If you ever report a problem, the file `yue2_groove_settings.json` in the app folder shows
+  your settings and your machine in one place — you can attach it.
+
+**Full details:** https://github.com/deadjoe/yue2_groove/releases/tag/v1.0.4
+
 ## 1.0.3 — 2026-09-22
 
 **Random seeds, and songs up to 12 minutes**
