@@ -8,6 +8,19 @@ feature listed here is missing): quit Pinokio completely, open it again, and cli
 once more.  Pinokio keeps the update steps it loaded at launch until it is restarted, so the
 first Update after a launcher change can run the old steps.
 
+## 1.0.5 — 2026-09-23
+
+**Long songs are no longer cut off at 6 minutes**
+
+- If your computer uses the GGUF engine (graphics cards under 16 GB, or BACKEND → `gguf` in the
+  settings), every song stopped at about 6 minutes and showed as "truncated" in the LIBRARY, even
+  with the length knobs at maximum — so songs ended before the lyrics did. That is fixed: songs now
+  run as long as the length setting allows (up to 12 minutes).
+- Remember that a song ends when its lyrics end: for a 10-minute song, write lyrics long enough
+  for 10 minutes.
+
+**Full details:** https://github.com/deadjoe/yue2_groove/releases/tag/v1.0.5
+
 ## 1.0.4 — 2026-09-23
 
 **Your settings are remembered, and a gear opens them**
