@@ -8,7 +8,7 @@ feature listed here is missing): quit Pinokio completely, open it again, and cli
 once more.  Pinokio keeps the update steps it loaded at launch until it is restarted, so the
 first Update after a launcher change can run the old steps.
 
-## Cover fix — 2026-09-26
+## 1.0.6 — 2026-09-26
 
 **Cover transcription works again on new installs**
 
@@ -18,7 +18,8 @@ first Update after a launcher change can run the old steps.
   SheetSage2 version the app was tested with.
 - Already installed and seeing this error? Click **Update**, then **Start**. If Cover still
   fails, quit Pinokio completely, open it again, and click **Update** once more.
-- The app version does not change (still 1.0.5).
+
+**Full details:** https://github.com/deadjoe/yue2_groove/releases/tag/v1.0.6
 
 ## 1.0.5 — 2026-09-23
 
