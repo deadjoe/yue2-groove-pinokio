@@ -58,6 +58,19 @@ module.exports = {
         }
       }
     },
+    // Put SheetSage2 on the revision install.js pins (a no-op when already there). Repairs
+    // installs from 2026-09-22 on, whose later revision fails Cover with
+    // FileNotFoundError: chord_spelling_sheetsage2.py; the module cache needs no cleanup.
+    {
+      when: "{{exists('app/.venv-sheetsage2')}}",
+      method: "hf.download",
+      params: {
+        path: "app",
+        _: ["m-a-p/SheetSage2"],
+        revision: "24154de28aa6ca3539ae9d87b13364cae2ba2ca2",
+        "local-dir": "models/SheetSage2"
+      }
+    },
     {
       when: "{{exists('app/.venv-sheetsage2') && exists('app/models/SheetSage2/requirements.txt')}}",
       method: "shell.run",

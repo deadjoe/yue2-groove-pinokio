@@ -8,6 +8,18 @@ feature listed here is missing): quit Pinokio completely, open it again, and cli
 once more.  Pinokio keeps the update steps it loaded at launch until it is restarted, so the
 first Update after a launcher change can run the old steps.
 
+## Cover fix — 2026-09-26
+
+**Cover transcription works again on new installs**
+
+- If you installed on or after September 22, every Cover transcription failed after a few
+  seconds with `FileNotFoundError: ... chord_spelling_sheetsage2.py`. A change in the
+  SheetSage2 model on Hugging Face caused it, not your computer. Install now uses the
+  SheetSage2 version the app was tested with.
+- Already installed and seeing this error? Click **Update**, then **Start**. If Cover still
+  fails, quit Pinokio completely, open it again, and click **Update** once more.
+- The app version does not change (still 1.0.5).
+
 ## 1.0.5 — 2026-09-23
 
 **Long songs are no longer cut off at 6 minutes**

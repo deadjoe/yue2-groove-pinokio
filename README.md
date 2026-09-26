@@ -110,7 +110,7 @@ Or from Desktop:
 | Groove venv | official `venv: "env"` — `uv pip install -e ".[yue2]"` with `overrides/{macos,linux}.txt` |
 | CUDA torch | `torch.js` (Pinokio's standard pattern): on NVIDIA Linux/Windows reinstalls `torch==2.10.0` from the `cu128` index — PyPI's Windows wheel is CPU-only. No-op on macOS |
 | SheetSage2 venv | official `venv: ".venv-sheetsage2"` + torch 2.8 |
-| Weights | official `hf.download` for `m-a-p/SheetSage2` (to `app/models/SheetSage2`), `m-a-p/YuE2-3B`, `m-a-p/YuE2-Vae`; then the MERT-v2-FullSong snapshot pinned in SheetSage2's `config.json` (`base_model_revision`) into the HF cache |
+| Weights | official `hf.download` for `m-a-p/SheetSage2` at a pinned revision (to `app/models/SheetSage2`; Update puts existing installs on the same pin), `m-a-p/YuE2-3B`, `m-a-p/YuE2-Vae`; then the MERT-v2-FullSong snapshot pinned in SheetSage2's `config.json` (`base_model_revision`) into the HF cache |
 | Verify | groove + yue2 + Gradio frontend; Cover venv imports torch/transformers; on NVIDIA, `torch.cuda.is_available()` must be true |
 
 Cover needs no network after Install: Start passes `YUE2_GROOVE_MODELS=app/models` so the app uses the downloaded SheetSage2, and the adapter finds its MERT base in the cache by commit hash.

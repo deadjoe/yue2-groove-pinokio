@@ -112,11 +112,15 @@ module.exports = {
       }
     },
 
+    // SheetSage2 is pinned: from e8b16e3e (2026-09-22) its remote code does not load from a
+    // local directory under transformers 4.45 (FileNotFoundError: chord_spelling_sheetsage2.py).
+    // Keep the revision in step with update.js.
     {
       method: "hf.download",
       params: {
         path: "app",
         _: ["m-a-p/SheetSage2"],
+        revision: "24154de28aa6ca3539ae9d87b13364cae2ba2ca2",
         "local-dir": "models/SheetSage2"
       }
     },
