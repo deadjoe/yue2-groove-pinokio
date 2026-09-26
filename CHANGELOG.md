@@ -8,6 +8,16 @@ feature listed here is missing): quit Pinokio completely, open it again, and cli
 once more.  Pinokio keeps the update steps it loaded at launch until it is restarted, so the
 first Update after a launcher change can run the old steps.
 
+## 1.0.8 — 2026-09-26
+
+**The colour button in the LIBRARY player works**
+
+- After updating to 1.0.7, clicking the new colour button could do nothing: Pinokio's window
+  kept using a saved copy of the old player. That is fixed, and future updates will always
+  load the new version.
+
+**Full details:** https://github.com/deadjoe/yue2_groove/releases/tag/v1.0.8
+
 ## 1.0.7 — 2026-09-26
 
 **Pick a colour for the LIBRARY player**
