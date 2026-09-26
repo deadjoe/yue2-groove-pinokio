@@ -8,6 +8,18 @@ feature listed here is missing): quit Pinokio completely, open it again, and cli
 once more.  Pinokio keeps the update steps it loaded at launch until it is restarted, so the
 first Update after a launcher change can run the old steps.
 
+## 1.0.7 — 2026-09-26
+
+**Pick a colour for the LIBRARY player**
+
+- When a song plays in the LIBRARY, its moving bars now come in four colours: the usual
+  white, retro terminal green, red, or blue. Click the small button with the coloured dot next
+  to the play controls to switch to the next one.
+- Your choice is remembered in this browser, and the progress line under the bars uses the
+  same colour.
+
+**Full details:** https://github.com/deadjoe/yue2_groove/releases/tag/v1.0.7
+
 ## 1.0.6 — 2026-09-26
 
 **Cover transcription works again on new installs**
