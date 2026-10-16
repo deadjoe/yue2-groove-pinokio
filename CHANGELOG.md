@@ -8,6 +8,28 @@ feature listed here is missing): quit Pinokio completely, open it again, and cli
 once more.  Pinokio keeps the update steps it loaded at launch until it is restarted, so the
 first Update after a launcher change can run the old steps.
 
+## 1.0.10 — 2026-10-17
+
+**Validated audio, checkpoint and score-renderer updates**
+
+- Updated SoundFile, safetensors and abcjs; audio/model regression tests and
+  desktop/mobile score comparisons passed.
+- Keep Gradio at the tested 6.17.3. Install no longer independently replaces it
+  with the latest Gradio, keeping the app and Hub runtime compatible. Installs
+  already using a later Gradio return to this validated version during Update.
+- Click **Update**, then **Start**. No Reset or model download is required for
+  these dependency changes. The model versions and separate Cover environment
+  are unchanged.
+
+**Full details:** https://github.com/deadjoe/yue2_groove/releases/tag/v1.0.10
+
+## 1.0.9 — 2026-10-16
+
+- macOS uses Torch 2.14.1, with dependency overrides that prevent ordinary uv
+  project commands from restoring the old MPS runtime. Linux/CUDA retains 2.10.0.
+
+**Full details:** https://github.com/deadjoe/yue2_groove/releases/tag/v1.0.9
+
 ## 1.0.8 — 2026-09-26
 
 **The colour button in the LIBRARY player works**
