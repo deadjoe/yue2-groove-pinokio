@@ -48,14 +48,14 @@ module.exports = {
       }
     },
 
-    // Gradio frontend assets + YuE2-compatible hub pin
+    // Repair Gradio assets using the app requirement, never an independent latest version.
     {
       method: "shell.run",
       params: {
         venv: "env",
         path: "app",
         message: [
-          "uv pip install --reinstall-package gradio \"gradio>=6,<7\"",
+          "uv pip install --reinstall-package gradio -e . --overrides {{platform === 'darwin' ? 'overrides/macos.txt' : 'overrides/linux.txt'}}",
           "uv pip install \"huggingface-hub==0.36.2\"",
           "python -c \"from pathlib import Path; import gradio; p=Path(gradio.__file__).parent/'templates'/'frontend'/'index.html'; assert p.is_file(), p\""
         ]

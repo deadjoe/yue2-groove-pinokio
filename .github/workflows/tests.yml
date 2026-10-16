@@ -1,0 +1,12 @@
+name: launcher checks
+on: [push, pull_request]
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/install-policy.test.js
+      - run: for file in *.js; do node --check "$file"; done
