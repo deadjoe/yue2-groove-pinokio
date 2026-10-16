@@ -7,7 +7,7 @@
 // Adapted from Pinokio's system/examples/torch.js. The version pin must track
 // `torch==` in upstream YuE2's pyproject.toml (yue2-v0.1.6 -> 2.10.0).
 // macOS is intentionally not touched: overrides/macos.txt already pins torch
-// 2.14.0 for the MPS attention fix. AMD / CPU-only machines fall through
+// at the app-validated version for the MPS attention fix. AMD / CPU-only machines fall through
 // unchanged; YuE2 upstream supports CUDA (BF16) and MPS only.
 module.exports = {
   run: [

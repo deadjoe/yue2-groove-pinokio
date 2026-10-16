@@ -117,7 +117,8 @@ Cover needs no network after Install: Start passes `YUE2_GROOVE_MODELS=app/model
 
 ## Notes
 
-- macOS installs groove torch via `overrides/macos.txt` (2.14). Linux/Windows + NVIDIA get `torch==2.10.0+cu128` from `torch.js` (the pin must track upstream YuE2's `torch==`). SheetSage2 uses torch 2.8.0 (CPU/MPS index on Mac, cu126 on Linux/Windows).
+- Gradio asset repair follows the app’s own dependency requirement and platform override file, so it cannot independently replace the validated UI version with the latest release.
+- macOS installs groove torch via `overrides/macos.txt` (the app-validated version). Linux/Windows + NVIDIA get `torch==2.10.0+cu128` from `torch.js` (the pin must track upstream YuE2's `torch==`). SheetSage2 uses torch 2.8.0 (CPU/MPS index on Mac, cu126 on Linux/Windows).
 - Start uses `python -m yue2_groove … --sheetsage-python …` so Pinokio owns the process and Cover is configured. The venv path and `YUE2_GROOVE_MODELS` are built with `path.resolve(cwd, …)` (cmd.exe on Windows does not expand `$PWD`).
 - Apple Silicon starts with MPS watermark defaults (`0.8` / `0.5`) from `ENVIRONMENT`.
 - To wipe both Python envs and the saved settings: **Reset**. Weight cache and `models/SheetSage2` are kept.
