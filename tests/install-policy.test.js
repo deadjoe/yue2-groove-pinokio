@@ -31,3 +31,31 @@ for (const platform of ['darwin', 'linux', 'win32']) {
 test('CUDA Torch repair never runs on macOS', () => {
   for (const step of torch.run) assert.equal(render(step.when, 'darwin'), 'false')
 })
+
+test('SheetSage2 venv checks import torchaudio, not just torch', () => {
+  // A present-but-unloadable libtorchaudio.pyd must fail install/update, not the
+  // first Cover transcription.
+  for (const script of [install, update]) {
+    const steps = script.run.filter(s => s.params?.venv === '.venv-sheetsage2' &&
+      String(s.params?.message).includes('import torch'))
+    assert.ok(steps.length > 0)
+    for (const step of steps) assert.match(String(step.params.message), /torchaudio/)
+  }
+})
+
+test('CPU-only machines do not get the cu126 SheetSage2 torch', () => {
+  const steps = install.run.filter(s =>
+    String(s.params?.message).includes('download.pytorch.org/whl'))
+  for (const step of steps) {
+    const message = String(step.params.message)
+    if (message.includes('cu126')) {
+      assert.equal(render(step.when, 'win32', 'nvidia'), 'true')
+      assert.equal(render(step.when, 'win32', 'cpu'), 'false')
+      assert.equal(render(step.when, 'linux', 'cpu'), 'false')
+    }
+    if (message.includes('/whl/cpu')) {
+      assert.equal(render(step.when, 'win32', 'cpu'), 'true')
+      assert.equal(render(step.when, 'darwin', 'cpu'), 'false')
+    }
+  }
+})

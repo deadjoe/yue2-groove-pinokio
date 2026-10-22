@@ -98,6 +98,17 @@ module.exports = {
         message: "python -c \"import yue2_groove, yue2, gradio\""
       }
     },
+    // Catch a broken SheetSage2 venv (e.g. libtorchaudio.pyd present but not
+    // loadable on Windows) here instead of at the first Cover transcription.
+    {
+      when: "{{exists('app/.venv-sheetsage2')}}",
+      method: "shell.run",
+      params: {
+        venv: ".venv-sheetsage2",
+        path: "app",
+        message: "python -c \"import torch, torchaudio, transformers\""
+      }
+    },
     {
       method: "notify",
       params: {
