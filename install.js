@@ -86,9 +86,12 @@ module.exports = {
       }
     },
 
-    // Cover venv: official venv: attribute (Pinokio conda python, not host python3.11)
+    // Cover venv: official venv: attribute (Pinokio conda python, not host python3.11).
+    // CUDA torch only on NVIDIA: a CPU-only machine gets the small CPU build instead
+    // of a 3 GB cu126 download it can never use (and a corrupt one only surfaced at
+    // the first Cover run).
     {
-      when: "{{platform === 'linux' || platform === 'win32'}}",
+      when: "{{(platform === 'linux' || platform === 'win32') && gpu === 'nvidia'}}",
       method: "shell.run",
       params: {
         venv: ".venv-sheetsage2",
@@ -96,6 +99,18 @@ module.exports = {
         message: [
           "uv pip install huggingface-hub==0.36.0",
           "uv pip install torch==2.8.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu126"
+        ]
+      }
+    },
+    {
+      when: "{{(platform === 'linux' || platform === 'win32') && gpu !== 'nvidia'}}",
+      method: "shell.run",
+      params: {
+        venv: ".venv-sheetsage2",
+        path: "app",
+        message: [
+          "uv pip install huggingface-hub==0.36.0",
+          "uv pip install torch==2.8.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cpu"
         ]
       }
     },
@@ -177,12 +192,14 @@ module.exports = {
         message: "python -c \"from pathlib import Path; import yue2_groove, yue2, gradio; p=Path(gradio.__file__).parent/'templates'/'frontend'/'index.html'; assert p.is_file(), p\""
       }
     },
+    // torchaudio is in the check: its libtorchaudio extension is what fails to load
+    // on a broken Windows install, and that must fail the install, not the first Cover.
     {
       method: "shell.run",
       params: {
         venv: ".venv-sheetsage2",
         path: "app",
-        message: "python -c \"import torch, transformers\""
+        message: "python -c \"import torch, torchaudio, transformers\""
       }
     },
     {

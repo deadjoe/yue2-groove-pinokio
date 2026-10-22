@@ -8,6 +8,18 @@ feature listed here is missing): quit Pinokio completely, open it again, and cli
 once more.  Pinokio keeps the update steps it loaded at launch until it is restarted, so the
 first Update after a launcher change can run the old steps.
 
+## 1.0.11 — 2026-10-23
+
+**Windows Cover environment detection and diagnostics**
+
+- AUTO-DETECT now checks the app directory and supports both Windows and Linux/macOS virtual environment layouts.
+- CHECK ENVIRONMENT now imports TorchAudio to detect native-library loading failures, reports its version, and correctly detects Hugging Face Hub.
+- Install and Update verify TorchAudio imports. New Linux/Windows SheetSage2 environments use CUDA wheels on NVIDIA machines and CPU wheels otherwise.
+- Update does not rebuild an existing SheetSage2 environment. If its import check fails, keep the error output for diagnosis; this release does not claim to resolve every Windows DLL loading failure.
+- No Reset is required to receive the detection and diagnostic improvements.
+
+**Full details:** https://github.com/deadjoe/yue2_groove/releases/tag/v1.0.11
+
 ## 1.0.10 — 2026-10-17
 
 **Validated audio, checkpoint and score-renderer updates**
