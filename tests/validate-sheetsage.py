@@ -21,7 +21,12 @@ REVISION = "24154de28aa6ca3539ae9d87b13364cae2ba2ca2"
 
 def run(args, cwd, env, expect_ok=True):
     print("+", shlex.join(map(str, args)), flush=True)
-    result = subprocess.run(list(map(str, args)), cwd=cwd, env=env, text=True,
+    args = list(map(str, args))
+    # Windows CreateProcess resolves a relative executable before applying cwd.
+    # Pinokio runs it in a shell already rooted at app; emulate that resolution.
+    if "/" in args[0] and not Path(args[0]).is_absolute():
+        args[0] = str((Path(cwd) / args[0]).resolve())
+    result = subprocess.run(args, cwd=cwd, env=env, text=True,
                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     print(result.stdout, flush=True)
     if expect_ok and result.returncode:
