@@ -86,47 +86,6 @@ module.exports = {
       }
     },
 
-    // Cover venv: official venv: attribute (Pinokio conda python, not host python3.11).
-    // CUDA torch only on NVIDIA: a CPU-only machine gets the small CPU build instead
-    // of a 3 GB cu126 download it can never use (and a corrupt one only surfaced at
-    // the first Cover run).
-    {
-      when: "{{(platform === 'linux' || platform === 'win32') && gpu === 'nvidia'}}",
-      method: "shell.run",
-      params: {
-        venv: ".venv-sheetsage2",
-        path: "app",
-        message: [
-          "uv pip install huggingface-hub==0.36.0",
-          "uv pip install torch==2.8.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu126"
-        ]
-      }
-    },
-    {
-      when: "{{(platform === 'linux' || platform === 'win32') && gpu !== 'nvidia'}}",
-      method: "shell.run",
-      params: {
-        venv: ".venv-sheetsage2",
-        path: "app",
-        message: [
-          "uv pip install huggingface-hub==0.36.0",
-          "uv pip install torch==2.8.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cpu"
-        ]
-      }
-    },
-    {
-      when: "{{platform === 'darwin'}}",
-      method: "shell.run",
-      params: {
-        venv: ".venv-sheetsage2",
-        path: "app",
-        message: [
-          "uv pip install huggingface-hub==0.36.0",
-          "uv pip install torch==2.8.0 torchaudio==2.8.0"
-        ]
-      }
-    },
-
     // SheetSage2 is pinned: from e8b16e3e (2026-09-22) its remote code does not load from a
     // local directory under transformers 4.45 (FileNotFoundError: chord_spelling_sheetsage2.py).
     // Keep the revision in step with update.js.
@@ -140,12 +99,8 @@ module.exports = {
       }
     },
     {
-      method: "shell.run",
-      params: {
-        venv: ".venv-sheetsage2",
-        path: "app",
-        message: "uv pip install -r models/SheetSage2/requirements.txt"
-      }
+      method: "script.start",
+      params: { uri: "sheetsage.js" }
     },
     // SheetSage2 is an adapter on MERT-v2-FullSong, pinned to one commit in its
     // config.json. Fetch that exact snapshot into the HF cache now so Cover never

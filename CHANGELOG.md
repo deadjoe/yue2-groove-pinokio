@@ -8,6 +8,12 @@ feature listed here is missing): quit Pinokio completely, open it again, and cli
 once more.  Pinokio keeps the update steps it loaded at launch until it is restarted, so the
 first Update after a launcher change can run the old steps.
 
+## Unreleased — Cover dependency repair
+
+- Fix main-app uv overrides leaking into SheetSage2 installation and selecting Torch 2.10 alongside TorchAudio 2.8.
+- Install and Update now share an isolated installer and repair the Cover environment to matching Torch/TorchAudio 2.8 builds. No Reset is required.
+- Validate dependency versions, real imports and an audio resampling operation before declaring the Cover environment ready.
+
 ## 1.0.11 — 2026-10-23
 
 **Windows Cover environment detection and diagnostics**

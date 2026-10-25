@@ -3,6 +3,7 @@ const assert = require('node:assert/strict')
 const install = require('../install.js')
 const update = require('../update.js')
 const torch = require('../torch.js')
+const sheetsage = require('../sheetsage.js')
 
 function render(text, platform, gpu = 'nvidia') {
   return text.replace(/\{\{(.*?)\}\}/g, (_, expression) =>
@@ -44,7 +45,7 @@ test('SheetSage2 venv checks import torchaudio, not just torch', () => {
 })
 
 test('CPU-only machines do not get the cu126 SheetSage2 torch', () => {
-  const steps = install.run.filter(s =>
+  const steps = sheetsage.run.filter(s =>
     String(s.params?.message).includes('download.pytorch.org/whl'))
   for (const step of steps) {
     const message = String(step.params.message)
@@ -56,6 +57,44 @@ test('CPU-only machines do not get the cu126 SheetSage2 torch', () => {
     if (message.includes('/whl/cpu')) {
       assert.equal(render(step.when, 'win32', 'cpu'), 'true')
       assert.equal(render(step.when, 'darwin', 'cpu'), 'false')
+    }
+  }
+})
+
+for (const platform of ['darwin', 'linux', 'win32']) {
+  for (const gpu of ['nvidia', 'cpu', 'amd']) {
+    test(`SheetSage2 isolated policy: ${platform}/${gpu}`, () => {
+      const selected = sheetsage.run.filter(s => render(s.when, platform, gpu) === 'true')
+      assert.equal(selected.length, 1)
+      const step = selected[0]
+      assert.equal(step.params.path, 'app')
+      assert.equal(step.params.venv, '.venv-sheetsage2')
+      const command = render(step.params.message, platform, gpu)
+      const python = platform === 'win32' ? '.venv-sheetsage2/Scripts/python.exe' : '.venv-sheetsage2/bin/python'
+      const parts = command.split(' && ')
+      assert.equal(parts.length, 3)
+      for (const install of parts.slice(0, 2)) {
+        assert.match(install, /^uv --no-config pip install /)
+        assert.ok(install.includes(`--python "${python}"`))
+      }
+      const suffix = platform === 'darwin' ? '' : gpu === 'nvidia' ? '+cu126' : '+cpu'
+      assert.ok(parts[0].includes(`torch==2.8.0${suffix} torchaudio==2.8.0${suffix}`))
+      assert.match(parts[1], /-r models\/SheetSage2\/requirements.txt$/)
+      assert.ok(parts[2].startsWith(`"${python}" ../check-sheetsage.py --flavor `))
+    })
+  }
+}
+
+test('Install and Update both repair SheetSage2 after downloading its pinned requirements', () => {
+  for (const script of [install, update]) {
+    const installer = script.run.findIndex(s => s.method === 'script.start' && s.params.uri === 'sheetsage.js')
+    const download = script.run.findIndex(s => s.method === 'hf.download' && s.params._.includes('m-a-p/SheetSage2'))
+    assert.ok(installer > download && download >= 0)
+    assert.equal(script.run.filter(s => s.params?.uri === 'sheetsage.js').length, 1)
+    for (const s of script.run) {
+      if (s.params?.venv === '.venv-sheetsage2') {
+        assert.doesNotMatch(String(s.params.message), /uv .*pip install/)
+      }
     }
   }
 })

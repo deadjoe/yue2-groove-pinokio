@@ -10,3 +10,39 @@ jobs:
           node-version: '22'
       - run: node --test tests/install-policy.test.js
       - run: for file in *.js; do node --check "$file"; done
+
+  sheetsage-runtime:
+    name: SheetSage2 / ${{ matrix.os }} / ${{ matrix.gpu }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-2022
+            python: '3.10'
+            gpu: nvidia
+          - os: ubuntu-latest
+            python: '3.10'
+            gpu: cpu
+          - os: macos-latest
+            python: '3.11'
+            gpu: cpu
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: deadjoe/yue2_groove
+          ref: 8097cefd075570309f27c7c127ccf84cfa6265bf
+          path: app-source
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.13.5'
+      - name: Real clean install and repair of mismatched Torch
+        run: python tests/validate-sheetsage.py --app-source app-source --gpu ${{ matrix.gpu }}

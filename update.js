@@ -73,12 +73,8 @@ module.exports = {
     },
     {
       when: "{{exists('app/.venv-sheetsage2') && exists('app/models/SheetSage2/requirements.txt')}}",
-      method: "shell.run",
-      params: {
-        venv: ".venv-sheetsage2",
-        path: "app",
-        message: "uv pip install -r models/SheetSage2/requirements.txt"
-      }
+      method: "script.start",
+      params: { uri: "sheetsage.js" }
     },
     // Existing installs: fetch the pinned MERT-v2-FullSong snapshot (cache hit = instant).
     {
