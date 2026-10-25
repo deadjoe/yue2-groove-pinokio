@@ -24,8 +24,8 @@ def run(args, cwd, env, expect_ok=True):
     args = list(map(str, args))
     # Windows CreateProcess resolves a relative executable before applying cwd.
     # Pinokio runs it in a shell already rooted at app; emulate that resolution.
-    if "/" in args[0] and not Path(args[0]).is_absolute():
-        args[0] = str((Path(cwd) / args[0]).resolve())
+    if sys.platform == "win32" and "/" in args[0] and not Path(args[0]).is_absolute():
+        args[0] = str((Path(cwd) / args[0]).absolute())
     result = subprocess.run(args, cwd=cwd, env=env, text=True,
                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     print(result.stdout, flush=True)
